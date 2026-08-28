@@ -1,0 +1,173 @@
+/*
+  Design rule for this project, and the one thing not to break:
+
+      COLOUR MEANS RISK. NOTHING ELSE ON THE PAGE IS COLOURED.
+
+  The matrix already carries four saturated colours that mean something specific.
+  Adding a brand accent anywhere else makes the risk colours read as decoration.
+  Everything outside the grid is achromatic on purpose.
+
+  All tokens live here. Change a value once and it changes everywhere.
+*/
+
+:root {
+  /* Chrome — deliberately achromatic */
+  --paper: #fbfbf9;
+  --paper-sunk: #f2f2ef;
+  --ink: #14181d;
+  --ink-soft: #4a5058;
+  --ink-faint: #878d95;
+  --rule: #dcdcd6;
+  --rule-strong: #b8b8b0;
+
+  /* Risk — the only colour in the system. Drawn from the HUX AI brand palette
+     (swatch: assets/hux-palette.png). Severity darkens monotonically, so the
+     ramp survives greyscale and most colour-vision deficiencies. Critical is
+     purple, not red — the "beyond red" convention (cf. the AQI scale): nothing
+     outranks it. The remaining brand colours (#7aa5b8, #5b6cb3, #e58283,
+     #947aa5) are deliberately unused — colour means risk, so they must never
+     appear as accents elsewhere on the page. */
+  --risk-low: #81cfce;
+  --risk-medium: #e4815c;
+  --risk-high: #e66e6d;
+  --risk-critical: #9366ab;
+  --risk-empty: #d8d4d6;
+
+  /* Type */
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+  --measure: 64ch;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-feature-settings: "onum" 1;
+}
+
+/* ---- Type scale ------------------------------------------------------- */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 1.25rem;
+}
+
+h1 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+  max-width: 20ch;
+}
+
+h2 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+h3 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+}
+
+p { margin: 0 0 1rem; max-width: var(--measure); }
+a { color: var(--ink); text-decoration-color: var(--rule-strong); text-underline-offset: 2px; }
+a:hover { text-decoration-color: var(--ink); }
+
+code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+
+/* ---- Layout ----------------------------------------------------------- */
+
+.wrap { max-width: 78rem; margin: 0 auto; padding: 0 var(--gutter); }
+.narrow { max-width: 46rem; }
+
+.masthead { padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
+.masthead p { color: var(--ink-soft); font-size: 1.125rem; }
+
+section.band { padding: clamp(2.5rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--rule); }
+
+.prose h3 { margin-top: 1.75rem; }
+.prose ol, .prose ul { max-width: var(--measure); padding-left: 1.25rem; }
+.prose li { margin-bottom: 0.5rem; }
+.prose strong { font-weight: 600; }
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 2.5rem 0 4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+/* ---- Draft marker ------------------------------------------------------ */
+
+.draft-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px dashed var(--rule-strong);
+  border-radius: 2px;
+  padding: 0.15rem 0.4rem;
+  vertical-align: middle;
+}
+
+.wip-banner {
+  border: 1px dashed var(--rule-strong);
+  background: var(--paper-sunk);
+  padding: 0.875rem 1rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- Accessibility floor ----------------------------------------------- */
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---- Risk colour mapping ------------------------------------------------
+   Lives here, not in a CSS module, because CSS Modules only allow selectors
+   scoped to a class. Any element with data-risk="low|medium|high|critical"
+   gets a --risk variable it can use for background, border or text.
+
+   This is the single place risk colours are assigned. Do not duplicate it.  */
+
+[data-risk="low"]      { --risk: var(--risk-low); }
+[data-risk="medium"]   { --risk: var(--risk-medium); }
+[data-risk="high"]     { --risk: var(--risk-high); }
+[data-risk="critical"] { --risk: var(--risk-critical); }
+[data-risk="empty"]    { --risk: var(--risk-empty); }

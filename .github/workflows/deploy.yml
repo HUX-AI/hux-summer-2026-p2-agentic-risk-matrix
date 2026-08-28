@@ -1,0 +1,73 @@
+# Publishes the live site AND the preview site.
+#
+# Runs automatically when something is merged into main. Takes about two
+# minutes. It builds the site twice:
+#
+#   - the live site (drafts hidden — see lib/content.js), at the root URL
+#   - the preview site (drafts visible), at <live URL>/preview/
+#
+# The preview is how content editors see their draft cells rendered without
+# running anything locally: merge a draft, wait two minutes, open /preview/.
+# It carries a PREVIEW BUILD banner so nobody mistakes it for the live site.
+# Note the repo is public, so the preview URL is too — drafts are unreviewed,
+# not secret.
+#
+# If you need to undo a bad deploy: go to the Actions tab, open the last good
+# run of this workflow, and press "Re-run all jobs". That republishes the
+# previous version (live and preview together). See docs/BREAK-GLASS.md.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/configure-pages@v5
+        id: pages
+      - run: npm ci
+      - name: Build the live site (drafts hidden)
+        run: npm run build
+        env:
+          # Project sites live at username.github.io/<repo>, so the app needs
+          # to know its sub-path. configure-pages works this out for us.
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - name: Set the live build aside
+        run: mv out _site
+      - name: Build the preview site (drafts visible)
+        run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}/preview
+          SHOW_DRAFTS: 'true'
+      - name: Nest the preview under /preview/
+        run: mv out _site/preview
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

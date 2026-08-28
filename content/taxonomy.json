@@ -1,0 +1,134 @@
+{
+  "_comment": "Hierarchical risk taxonomy, exported from the workbook 'Agentic AI Risk Taxonomy' sheet. Three families (A-C) hold nine domains (A.1-C.3, workbook codes R1-R9); each domain holds child risks. Child IDs are the unit of assessment - matrix cells cite children, never a family or domain alone. riskType is one of: Model-output, Governance, Action-execution.",
+  "families": [
+    {
+      "id": "A",
+      "name": "Intent & Authority",
+      "domains": [
+        {
+          "id": "A.1",
+          "code": "R1",
+          "name": "Objective & Instruction Integrity",
+          "riskType": "Model-output",
+          "risks": [
+            { "id": "A.1.1", "name": "Goal misinterpretation" },
+            { "id": "A.1.2", "name": "Goal hijacking" },
+            { "id": "A.1.3", "name": "Conflicting instructions" },
+            { "id": "A.1.4", "name": "Objective drift" },
+            { "id": "A.1.5", "name": "Wrong task prioritisation" }
+          ]
+        },
+        {
+          "id": "A.2",
+          "code": "R2",
+          "name": "Autonomy, Authority & Permission",
+          "riskType": "Governance",
+          "risks": [
+            { "id": "A.2.1", "name": "Unauthorised action" },
+            { "id": "A.2.2", "name": "Approval bypass" },
+            { "id": "A.2.3", "name": "Privilege escalation" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Execution & Interaction",
+      "domains": [
+        {
+          "id": "B.1",
+          "code": "R3",
+          "name": "Tool & Action Execution",
+          "riskType": "Action-execution",
+          "risks": [
+            { "id": "B.1.1", "name": "Wrong tool selected" },
+            { "id": "B.1.2", "name": "Incorrect API call" },
+            { "id": "B.1.3", "name": "Destructive operation" },
+            { "id": "B.1.4", "name": "Duplicate transaction" }
+          ]
+        },
+        {
+          "id": "B.2",
+          "code": "R4",
+          "name": "Data, Memory & Information Boundaries",
+          "riskType": "Action-execution",
+          "risks": [
+            { "id": "B.2.1", "name": "Data exfiltration" },
+            { "id": "B.2.2", "name": "Unauthorised disclosure" },
+            { "id": "B.2.3", "name": "Memory poisoning" }
+          ]
+        },
+        {
+          "id": "B.3",
+          "code": "R5",
+          "name": "Planning, Workflow & Delegation",
+          "riskType": "Model-output",
+          "risks": [
+            { "id": "B.3.1", "name": "Sequencing failure" },
+            { "id": "B.3.2", "name": "Infinite loop" },
+            { "id": "B.3.3", "name": "Premature execution" },
+            { "id": "B.3.4", "name": "Bad sub-task delegation" }
+          ]
+        },
+        {
+          "id": "B.4",
+          "code": "R6",
+          "name": "Agent-to-Agent & Ecosystem Interaction",
+          "riskType": "Action-execution",
+          "risks": [
+            { "id": "B.4.1", "name": "Cascading failure" },
+            { "id": "B.4.2", "name": "Agent spoofing" },
+            { "id": "B.4.3", "name": "Insecure inter-agent messaging" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Governance & Assurance",
+      "domains": [
+        {
+          "id": "C.1",
+          "code": "R7",
+          "name": "Human Oversight, Accountability & Trust",
+          "riskType": "Governance",
+          "risks": [
+            { "id": "C.1.1", "name": "Human approval bypass" },
+            { "id": "C.1.2", "name": "Automation bias" },
+            { "id": "C.1.3", "name": "Rubber-stamping" }
+          ]
+        },
+        {
+          "id": "C.2",
+          "code": "R8",
+          "name": "Observability, Traceability & Auditability",
+          "riskType": "Governance",
+          "risks": [
+            { "id": "C.2.1", "name": "Missing logs" },
+            { "id": "C.2.2", "name": "Incomplete action history" },
+            { "id": "C.2.3", "name": "Unverifiable approvals" }
+          ]
+        },
+        {
+          "id": "C.3",
+          "code": "R9",
+          "name": "Behavioural Stability & Runtime Drift",
+          "riskType": "Model-output",
+          "risks": [
+            { "id": "C.3.1", "name": "Behavioural drift" },
+            { "id": "C.3.2", "name": "Increased risk-taking" },
+            { "id": "C.3.3", "name": "New tool behaviour" }
+          ]
+        }
+      ]
+    }
+  ],
+  "amplificationFactors": [
+    { "name": "Irreversible Actions", "description": "Actions that cannot be undone (e.g., deleting data, transferring funds)." },
+    { "name": "External Impacts", "description": "Actions directly affecting customers, external systems, or the public." },
+    { "name": "Sensitive Data", "description": "Access to PII, health records, financial data, or intellectual property." },
+    { "name": "Financial Impact", "description": "High transaction limits or access to corporate payment systems." },
+    { "name": "Vulnerable Users", "description": "Interaction with minors, elderly, or users in crisis." },
+    { "name": "Execution Velocity", "description": "The agent's ability to repeat an error thousands of times in seconds." }
+  ]
+}

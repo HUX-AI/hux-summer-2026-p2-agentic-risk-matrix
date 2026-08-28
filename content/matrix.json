@@ -1,0 +1,116 @@
+{
+  "_comment": "One entry per autonomy x impact cell. Edit the text here and the page updates. Do not rename the 'id' fields. 'status' may be 'published' or 'draft' - draft cells are hidden on the live site but visible on the preview site (the live URL + /preview/). See CONTRIBUTING.md.",
+  "cells": [
+    {
+      "id": "L0-I0",
+      "autonomy": "L0",
+      "impact": "I0",
+      "owner": "Ben",
+      "status": "published",
+      "risk": "low",
+      "posture": "Permitted",
+      "scenario": "Internal read-only research or FAQ assistant.",
+      "controls": [
+        "AI disclosure at first contact",
+        "Retrieval-scoped; abstain if no source",
+        "Out-of-scope refusal in code, not prompt",
+        "Named owner",
+        "Prompt / response logging",
+        "Version-pinned rollback"
+      ],
+      "approval": "None per response. Approval attaches to content, not output.",
+      "rollback": "Revert to last known-good knowledge base and model version.",
+      "sources": ["Dahl 2024", "EU AI Act Art.50", "NIST AI 600-1"]
+    },
+    {
+      "id": "L0-I1",
+      "autonomy": "L0",
+      "impact": "I1",
+      "owner": "Ben",
+      "status": "published",
+      "risk": "medium",
+      "posture": "Supervised permission",
+      "scenario": "Internal policy / HR / IT helpdesk assistant.",
+      "controls": [
+        "Mandatory source citation",
+        "Abstain and escalate, never guess",
+        "Named escalation route",
+        "SME content sign-off + freshness SLA",
+        "Sampled QA review",
+        "Targeted user correction"
+      ],
+      "approval": "Subject-matter expert signs off content changes, recorded with date and version.",
+      "rollback": "Revert, then correct identifiable affected users through the existing support channel.",
+      "sources": ["Moffatt 2024", "Goddard 2012", "OWASP LLM09"]
+    },
+    {
+      "id": "L0-I2",
+      "autonomy": "L0",
+      "impact": "I2",
+      "owner": "Ben",
+      "status": "published",
+      "risk": "high",
+      "posture": "Restricted deployment",
+      "scenario": "Public-facing information service at scale.",
+      "controls": [
+        "High-stakes topics fenced to human channel",
+        "Red-team eval per release",
+        "Live groundedness monitoring",
+        "Staged / canary rollout",
+        "Two-person release gate",
+        "Tested kill switch",
+        "Cohort-level correction"
+      ],
+      "approval": "Two-person gate on anything changing the public answer surface.",
+      "rollback": "Versioned revert, kill switch to static content, cohort-level correction reconstructed from logs.",
+      "sources": ["Markup 2024", "Magesh 2025", "NIST AI 600-1"]
+    },
+    {
+      "id": "L0-I3",
+      "autonomy": "L0",
+      "impact": "I3",
+      "owner": "Ben",
+      "status": "published",
+      "risk": "high",
+      "posture": "Restricted deployment — safety-critical",
+      "scenario": "Safeguarding, crisis or health information; vulnerable users.",
+      "controls": [
+        "Impact assessment before launch",
+        "Professional-authored safety content",
+        "Deterministic crisis routing",
+        "Long-session / adversarial testing",
+        "Accountable owner, 24/7 suspension",
+        "Independent evaluation",
+        "Pre-tested fallback to human channel"
+      ],
+      "approval": "Named professional owner with 24/7 suspension authority; two-person sign-off on safety-path changes.",
+      "rollback": "Pre-tested fallback to static resources and a staffed human channel. Rollback protects the next user, not the one already harmed.",
+      "sources": ["Raine / Garcia", "Magesh 2025", "NIST AI 600-1"]
+    },
+
+    { "id": "L1-I0", "autonomy": "L1", "impact": "I0", "owner": "Shalom", "status": "draft", "risk": "low", "posture": "Permitted", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L1-I1", "autonomy": "L1", "impact": "I1", "owner": "Shalom", "status": "draft", "risk": "medium", "posture": "Supervised permission", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L1-I2", "autonomy": "L1", "impact": "I2", "owner": "Shalom", "status": "draft", "risk": "medium", "posture": "Supervised permission", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L1-I3", "autonomy": "L1", "impact": "I3", "owner": "Shalom", "status": "draft", "risk": "high", "posture": "Strict human approval", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+
+    { "id": "L2-I0", "autonomy": "L2", "impact": "I0", "owner": "Kevin", "status": "draft", "risk": "medium", "posture": "Supervised permission", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L2-I1", "autonomy": "L2", "impact": "I1", "owner": "Kevin", "status": "draft", "risk": "medium", "posture": "Supervised permission", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L2-I2", "autonomy": "L2", "impact": "I2", "owner": "Kevin", "status": "draft", "risk": "high", "posture": "Restricted deployment", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L2-I3", "autonomy": "L2", "impact": "I3", "owner": "Kevin", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+
+    { "id": "L3-I0", "autonomy": "L3", "impact": "I0", "owner": "Asli & Beste", "status": "draft", "risk": "medium", "posture": "Supervised permission", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L3-I1", "autonomy": "L3", "impact": "I1", "owner": "Asli & Beste", "status": "draft", "risk": "high", "posture": "Restricted deployment", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L3-I2", "autonomy": "L3", "impact": "I2", "owner": "Asli & Beste", "status": "draft", "risk": "high", "posture": "Strict human approval", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L3-I3", "autonomy": "L3", "impact": "I3", "owner": "Asli & Beste", "status": "draft", "risk": "high", "posture": "Restricted autonomy / dual approval", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+
+    { "id": "L4-I0", "autonomy": "L4", "impact": "I0", "owner": "Peri", "status": "draft", "risk": "high", "posture": "Restricted deployment", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L4-I1", "autonomy": "L4", "impact": "I1", "owner": "Peri", "status": "draft", "risk": "high", "posture": "Strict human control", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L4-I2", "autonomy": "L4", "impact": "I2", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L4-I3", "autonomy": "L4", "impact": "I3", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+
+    { "id": "L5-I0", "autonomy": "L5", "impact": "I0", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "Restrict / reduce autonomy", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L5-I1", "autonomy": "L5", "impact": "I1", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "No unrestricted autonomy", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L5-I2", "autonomy": "L5", "impact": "I2", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "Strict human control required", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+    { "id": "L5-I3", "autonomy": "L5", "impact": "I3", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] }
+  ]
+}

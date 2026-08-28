@@ -1,0 +1,28 @@
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.item { display: flex; gap: 0.75rem; align-items: flex-start; }
+
+.swatch {
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.2rem;
+  border-radius: 2px;
+  background: var(--risk);
+}
+
+.label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+.posture { display: block; font-size: 0.875rem; color: var(--ink); }
+.note { display: block; font-size: 0.8125rem; color: var(--ink-faint); line-height: 1.4; }

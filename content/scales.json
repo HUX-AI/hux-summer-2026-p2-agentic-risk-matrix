@@ -1,0 +1,30 @@
+{
+  "_comment": "The two axes of the matrix, plus the risk legend. Definitions must match the workbook reference scale exactly. If you change wording here, change it in the workbook too.",
+  "autonomyLevels": [
+    { "id": "L0", "name": "No execution",       "summary": "Information only",                 "detail": "The system answers, suggests or explains. It has no tools, no write access and cannot take an action. All impact runs through a human deciding what to do with the output." },
+    { "id": "L1", "name": "Bounded assistant",  "summary": "Suggests within limits",           "detail": "Drafts and proposes inside a fixed boundary. A human executes every action." },
+    { "id": "L2", "name": "Supervised actor",   "summary": "Acts with supervision",            "detail": "Takes actions while a human watches and can intervene before or during execution." },
+    { "id": "L3", "name": "Conditional agent",  "summary": "Acts within guardrails",           "detail": "Executes autonomously inside declared guardrails, pausing for approval when it hits a restricted zone." },
+    { "id": "L4", "name": "Delegated agent",    "summary": "Supervised by exception",          "detail": "Runs bounded workflows on its own. Humans review exceptions rather than every action." },
+    { "id": "L5", "name": "Open agent",         "summary": "Minimal transaction-level control","detail": "Acts with minimal per-transaction control. Oversight is aggregate, not per action." }
+  ],
+  "impactClasses": [
+    { "id": "I0", "name": "Negligible",  "summary": "No material impact expected",                          "detail": "Incorrect output produced, but nothing consequential follows from it." },
+    { "id": "I1", "name": "Limited",     "summary": "Minor, localized, reversible impact",                  "detail": "Effect stays within the affected team, system or individual and is cheap to undo." },
+    { "id": "I2", "name": "Significant", "summary": "Material customer, data, financial or operational impact", "detail": "Correction is possible, but the failure already reached the user population." },
+    { "id": "I3", "name": "Critical",    "summary": "Severe, potentially irreversible or widespread impact", "detail": "Consequences cannot be restored once the output has been relied upon." }
+  ],
+  "riskLegend": [
+    { "id": "low",      "label": "Low",                   "posture": "Permitted with baseline controls",   "note": "Standard safeguards and monitoring." },
+    { "id": "medium",   "label": "Medium",                "posture": "Supervised permission",              "note": "Additional supervision, validation and limits." },
+    { "id": "high",     "label": "High",                  "posture": "Restricted deployment",              "note": "Formal assurance and stronger human oversight." },
+    { "id": "critical", "label": "Critical",              "posture": "Regulatory & compliance assurance",  "note": "Maximum assurance and independent validation. Where even maximum assurance is insufficient for the autonomy and impact combination, the cell posture is Prohibited / redesign." }
+  ],
+  "auditCategories": [
+    { "n": 1, "name": "Evidence of risks",                 "detail": "Risk assessment, impact, classification assumptions, affected systems and stops." },
+    { "n": 2, "name": "Evidence of control design",        "detail": "Policies, guardrails, workflow boundaries, permissions, limits and monitoring." },
+    { "n": 3, "name": "Evidence of control effectiveness", "detail": "Test results, monitoring evidence, exception handling and control failure tests." },
+    { "n": 4, "name": "Evidence of approval & oversight",  "detail": "Human-in-the-loop configuration, approver authority, approval logs and exception approvals." },
+    { "n": 5, "name": "Evidence of resilience & recovery", "detail": "Rollback tests, failover evidence, incident response and recovery ownership." }
+  ]
+}
