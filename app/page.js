@@ -123,8 +123,7 @@ export default function Page() {
       <footer>
         <div className="wrap">
           <p>
-            Produced during the HUX AI Research Internship, Summer 2026. Conclusions are the
-            authors&rsquo; own and do not represent HUX AI or the authors&rsquo; institutions.
+            Produced during the HUX AI Research Internship, Summer 2026.
           </p>
           <p>This matrix is a governance instrument, not an assurance certificate.</p>
         </div>
