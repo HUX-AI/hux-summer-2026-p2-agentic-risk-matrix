@@ -31,8 +31,7 @@ export default function Page() {
           <p className="eyebrow">HUX AI · Research Internship · Project 2 · Summer 2026</p>
           <h1>Agentic AI Risk Control Matrix</h1>
           <p className="narrow">
-            Governance for AI systems that act, not just answer. Autonomy on one axis, impact on the
-            other, and the control posture you owe at every intersection.
+            Governance for AI systems, from chatbots to autonomous agents.
           </p>
         </div>
       </header>
