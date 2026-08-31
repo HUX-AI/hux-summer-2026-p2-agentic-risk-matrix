@@ -95,6 +95,19 @@ compute business rules.
   stacking is needed. Breakpoints are content-driven and chosen per component —
   there is no shared breakpoint token, and that is fine. The viewport meta tag
   is injected by Next.js; do not add one.
+- **Accessibility is a floor, not a feature.** Native elements first: the grid
+  is a real `<table>` with `scope`d headers, expand/collapse is `<details>`
+  (copy `ScaleList`), anything clickable is a real `<button>`. Interactive
+  state is mirrored in ARIA — `aria-pressed` on toggles and filters,
+  `aria-live` on the cell detail panel — and purely decorative visuals
+  (legend swatches, the scroll hint) are `aria-hidden`. Colour is never the
+  only carrier of meaning: a cell's risk level is in its accessible name and
+  in the detail panel text, not just its background. All text meets WCAG AA
+  contrast (≥ 4.5:1) against both paper tokens — the greys in `globals.css`
+  are chosen for exactly that, so do not lighten them, and note the matrix
+  cells use `#000` text because `#111` fails against the critical purple.
+  Keep the `:focus-visible` outline and `prefers-reduced-motion` rules in
+  `globals.css`.
 - **Derive options from data.** Filter buttons, grid columns and legend entries
   are all generated from `content/`. Adding a data row should never require a
   code change.

@@ -11,12 +11,15 @@
 */
 
 :root {
-  /* Chrome — deliberately achromatic */
+  /* Chrome — deliberately achromatic. The three inks are chosen to hold
+     WCAG AA contrast (>= 4.5:1) against BOTH paper tokens — even --ink-faint,
+     which sits on --paper-sunk inside the detail panel. Check before
+     lightening any of them (quick ratio check: webaim.org/resources/contrastchecker). */
   --paper: #fbfbf9;
   --paper-sunk: #f2f2ef;
   --ink: #14181d;
   --ink-soft: #4a5058;
-  --ink-faint: #878d95;
+  --ink-faint: #686e76;
   --rule: #dcdcd6;
   --rule-strong: #b8b8b0;
 

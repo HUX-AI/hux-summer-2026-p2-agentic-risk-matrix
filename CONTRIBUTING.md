@@ -313,7 +313,7 @@ need click state, copy `ScaleList.jsx` instead. Then:
 2. Import it in `app/page.js` and pass it data from `lib/content.js`.
 3. Run `npm run build`.
 
-Three rules that will save you an afternoon:
+Four rules that will save you an afternoon:
 
 - Attribute selectors like `[data-risk="high"]` **fail the build** inside a
   `.module.css` file. Put them in `app/globals.css`.
@@ -325,6 +325,14 @@ Three rules that will save you an afternoon:
   wrap it in a container with `overflow-x: auto` so it scrolls sideways on its
   own, the way the matrix grid does — the page itself must never scroll
   horizontally.
+- **Tab through your component with the keyboard** before opening the pull
+  request. Every control must be reachable and usable without a mouse, and the
+  focus outline must stay visible (the site provides one — never suppress it).
+  The cheap way to get this right is to use native elements: a real `<button>`,
+  not a click handler on a `<div>`; `<details>` for expand/collapse (copy
+  `ScaleList`); a real `<table>` for tabular data. And never let colour be the
+  only way to tell two things apart — pair it with text, the way every risk
+  cell also states its posture.
 
 ### If you use Claude Code
 
