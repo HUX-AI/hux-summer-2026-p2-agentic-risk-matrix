@@ -33,6 +33,9 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
 
   return (
     <div>
+      <p className={styles.scrollHint} aria-hidden="true">
+        Scroll the grid sideways for all {autonomyLevels.length} autonomy levels →
+      </p>
       <div className={styles.scroller}>
         <table className={styles.grid}>
           <caption className={styles.caption}>

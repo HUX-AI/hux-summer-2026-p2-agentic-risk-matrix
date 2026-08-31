@@ -1,3 +1,17 @@
+/* Shown only when the viewport is too narrow for the grid's 54rem min-width
+   (54rem + the 4vw gutters ≈ a 59rem viewport). Visual affordance only, so it
+   is aria-hidden — the table itself is unchanged for screen readers. */
+.scrollHint {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.75rem;
+}
+@media (max-width: 59rem) { .scrollHint { display: block; } }
+
 .scroller { overflow-x: auto; padding-bottom: 0.5rem; }
 
 .grid {

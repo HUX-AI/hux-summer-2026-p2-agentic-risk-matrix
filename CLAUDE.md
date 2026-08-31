@@ -85,6 +85,16 @@ compute business rules.
 - **Branches are `name/short-description`; commit messages are one line,
   `part: what you did`** (e.g. `L2: add I1 scenario`). Full rules in
   `CONTRIBUTING.md` → "Branch names and commit messages".
+- **Every component must work at phone width.** The page has no fixed layout
+  width: global spacing uses `clamp()`, text is capped by `max-width` measures,
+  and anything genuinely too wide to reflow (the matrix grid) scrolls sideways
+  inside its own `overflow-x: auto` container — never the page itself. New
+  components follow suit: prefer intrinsically responsive layouts
+  (`repeat(auto-fit, minmax(...))`, `max-width`, relative units) and add a
+  `@media (max-width: ...)` query in the component's `.module.css` where
+  stacking is needed. Breakpoints are content-driven and chosen per component —
+  there is no shared breakpoint token, and that is fine. The viewport meta tag
+  is injected by Next.js; do not add one.
 - **Derive options from data.** Filter buttons, grid columns and legend entries
   are all generated from `content/`. Adding a data row should never require a
   code change.
