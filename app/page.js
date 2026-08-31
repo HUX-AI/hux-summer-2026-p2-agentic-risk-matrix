@@ -16,6 +16,10 @@ import RiskTaxonomy from '@/components/RiskTaxonomy';
 import { getScales, getReferences, getAllCells, getSections, getTaxonomy, showDrafts } from '@/lib/content';
 
 export default function Page() {
+  // Set by the GitHub Pages workflow (see next.config.mjs). public/ assets in
+  // plain <img> tags do not get the prefix automatically.
+  const basePath = process.env.BASE_PATH || '';
+
   const scales = getScales();
   const references = getReferences();
   const taxonomy = getTaxonomy();
@@ -28,6 +32,13 @@ export default function Page() {
     <>
       <header className="masthead">
         <div className="wrap">
+          <img
+            className="masthead-mark"
+            src={`${basePath}/hux-icon.png`}
+            alt="HUX AI"
+            width="41"
+            height="50"
+          />
           <p className="eyebrow">HUX AI · Research Internship · Project 2 · Summer 2026</p>
           <h1>Agentic AI Risk Control Matrix</h1>
           <p className="narrow">

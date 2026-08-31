@@ -61,6 +61,9 @@ components/       Presentation. Never read the filesystem here.
 scripts/          Zero-dependency content validator. Runs before every build.
 assets/           Design references, not served. hux-palette.png is the HUX
                   brand swatch the risk colours in globals.css are drawn from.
+                  The 4000px logo files are the brand originals; the served
+                  copies (public/hux-icon.png, app/icon.png) are cropped and
+                  downscaled from B_HUX_Icon_4000px.png.
 ```
 
 Data flows one way: `content/` → `lib/content.js` → `app/page.js` → components.
@@ -117,7 +120,11 @@ npm run build && grep -c "Restricted autonomy" out/index.html   # must be 0
 
 ## Things that are deliberate and should not be "fixed"
 
-- The masthead has no hero image, logo or call-to-action button.
+- The masthead carries the small monochrome HUX icon and nothing else — no hero
+  image, no call-to-action button, and none of the wordmark-with-tagline lockups
+  from `assets/` ("Empowering humanity, shaping tomorrow" is marketing copy and
+  stays off a research artifact). The icon is achromatic on purpose; the
+  gradient orb asset must never appear on the page (colour means risk).
 - Risk cells are plain coloured rectangles with no icons or gradients.
 - The `L0 × I3` cell is rated **high**, not critical. This is a researched
   position, not an error — low autonomy does not mean low impact. See the
