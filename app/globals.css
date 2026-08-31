@@ -110,6 +110,11 @@ code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
 .masthead { padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
 .masthead p { color: var(--ink-soft); font-size: 1.125rem; }
 
+/* The HUX icon, and only the icon: monochrome, small, no tagline lockup.
+   The wordmark variants in assets/ stay off the page — this is a research
+   artifact, not a marketing site. */
+.masthead-mark { display: block; height: 3.125rem; width: auto; margin-bottom: 1.75rem; }
+
 section.band { padding: clamp(2.5rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--rule); }
 
 .prose h3 { margin-top: 1.75rem; }
