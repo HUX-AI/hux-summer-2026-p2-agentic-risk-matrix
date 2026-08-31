@@ -162,8 +162,27 @@
       "rollback": "Reverse a wrongly-placed hold immediately; reconstruct affected accounts from logs if a batch of holds is found flawed.",
       "sources": ["FCA Enforcement 2024", "PRA SS1/23", "SR 11-7 / OCC 2023-17"]
     },
-    { "id": "L4-I3", "autonomy": "L4", "impact": "I3", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
-
+    {
+      "id": "L4-I3",
+      "autonomy": "L4",
+      "impact": "I3",
+      "owner": "Peri",
+      "status": "draft",
+      "risk": "critical",
+      "posture": "Prohibited / redesign",
+      "scenario": "Full-Policy Closure",
+      "controls": [
+        "No autonomous execution at this scope — reduce to ≤L3",
+        "Dual human approval for SAR filing or account restriction",
+        "Fail closed: incomplete confidence/evidence defaults to escalation, never autonomous closure",
+        "Independent, continuous 2nd-line MRM validation of closure policy and watchlist coverage, separate from the build team",
+        "Full reasoning-trace logging, not just the final decision",
+        "Mandatory incident reporting and board-level escalation on systemic error"
+      ],
+      "approval": "Dual human sign-off required before SAR filing/account restriction executes. Named approvers, authority levels, timestamps, evidence reviewed — logged separately from routine closure logs.",
+      "rollback": "Reconstruct affected accounts/transactions from logs; flag for manual review; mandatory incident reporting — mirroring the escalation failure in the Starling case. Fallback: suspend to fully human-reviewed closure, no operational dependency on the agent.",
+      "sources": ["FCA Enforcement 2024", "PRA SS1/23", "SR 11-7 / OCC 2023-17", "FINRA 2026 Regulatory Oversight Report", "EU AI Act Annex III"]
+    },
     { "id": "L5-I0", "autonomy": "L5", "impact": "I0", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "Restrict / reduce autonomy", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L5-I1", "autonomy": "L5", "impact": "I1", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "No unrestricted autonomy", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L5-I2", "autonomy": "L5", "impact": "I2", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "Strict human control required", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
