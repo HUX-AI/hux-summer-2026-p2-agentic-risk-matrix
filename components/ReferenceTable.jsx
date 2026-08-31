@@ -48,7 +48,13 @@ export default function ReferenceTable({ references }) {
               </p>
               <p className={styles.evidences}>{ref.evidences}</p>
               {ref.url && (
-                <a className={styles.link} href={ref.url} target="_blank" rel="noreferrer noopener">
+                <a
+                  className={styles.link}
+                  href={ref.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={`Open source — ${ref.refKey}`}
+                >
                   Open source ↗
                 </a>
               )}

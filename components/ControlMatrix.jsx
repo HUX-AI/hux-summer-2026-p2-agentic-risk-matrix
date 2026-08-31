@@ -74,6 +74,11 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
                         type="button"
                         onClick={() => setSelectedId(cell.id)}
                         aria-pressed={selectedId === cell.id}
+                        aria-label={
+                          hidden
+                            ? `${level.id} × ${impact.id} — in progress`
+                            : `${level.id} × ${impact.id} — ${cell.posture} — ${riskById[cell.risk]?.label} risk`
+                        }
                         className={[
                           styles.cellButton,
                           selectedId === cell.id ? styles.cellSelected : '',
