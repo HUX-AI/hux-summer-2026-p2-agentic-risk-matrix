@@ -110,7 +110,7 @@
       "status": "draft",
       "risk": "high",
       "posture": "Restricted deployment",
-      "scenario": "Delegated autonomous agent - supervised by exception. Impact: negligible, no material impact expected.",
+      "scenario": "Alert Enrichment",
       "controls": [
         "Formal assurance/sign-off before deployment",
         "Continuous monitoring",
@@ -129,7 +129,7 @@
       "status": "draft",
       "risk": "high",
       "posture": "Strict human control",
-      "scenario": "Delegated autonomous agent - supervised by exception. Impact: limited, minor/localized/reversible.",
+      "scenario": "Narrow-Rule Closure",
       "controls": [
         "HITL approval on the closure rule itself, though instances execute autonomously",
         "Transaction/volume limits",
@@ -140,7 +140,28 @@
       "rollback": "Version-pinned closure rule with tested revert path; reopen any closed alert from the immutable log.",
       "sources": ["FCA Enforcement 2024"]
     },
-    { "id": "L4-I2", "autonomy": "L4", "impact": "I2", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+     {
+      "id": "L4-I2",
+      "autonomy": "L4",
+      "impact": "I2",
+      "owner": "Peri",
+      "status": "draft",
+      "risk": "critical",
+      "posture": "Prohibited / redesign",
+      "scenario": "Transaction Hold",
+      "controls": [
+        "Reduce autonomy to ≤L3 — hold requires human approval before execution",
+        "Mandatory HITL sign-off before any hold is placed",
+        "Transaction/value limits defining what can be flagged vs. must escalate",
+        "Immutable approval log: who approved, evidence reviewed, timestamp",
+        "Stop conditions — hold auto-expires/escalates if not actioned",
+        "Kill switch",
+        "Tested rollback: fast hold release with customer notification"
+      ],
+      "approval": "Mandatory human sign-off per hold. Full HITL log: approver, authority level, timestamp, evidence reviewed.",
+      "rollback": "Reverse a wrongly-placed hold immediately; reconstruct affected accounts from logs if a batch of holds is found flawed.",
+      "sources": ["FCA Enforcement 2024", "PRA SS1/23", "SR 11-7 / OCC 2023-17"]
+    },
     { "id": "L4-I3", "autonomy": "L4", "impact": "I3", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
 
     { "id": "L5-I0", "autonomy": "L5", "impact": "I0", "owner": "Frances", "status": "draft", "risk": "critical", "posture": "Restrict / reduce autonomy", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
