@@ -48,6 +48,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
   gap: 1rem;
+  /* Without this, grid stretches every card to the row's tallest one, and a
+     closed <details> shows the leftover as an empty bordered strip below its
+     summary bar. */
+  align-items: start;
 }
 @media (max-width: 26rem) {
   .grid { grid-template-columns: 1fr; }
