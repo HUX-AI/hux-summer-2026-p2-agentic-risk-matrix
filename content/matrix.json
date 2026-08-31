@@ -110,7 +110,7 @@
       "status": "draft",
       "risk": "high",
       "posture": "Restricted deployment",
-      "scenario": "Delegated autonomous agent - supervised by exception.",
+      "scenario": "Delegated autonomous agent - supervised by exception. Impact: negligible, no material impact expected.",
       "controls": [
         "Formal assurance/sign-off before deployment",
         "Continuous monitoring",
@@ -121,8 +121,25 @@
       "rollback": "Revert to last known-good screening/enrichment configuration; kill switch to suspend enrichment pending review.",
       "sources": ["OWASP LLM09"]
     },
-   
-    { "id": "L4-I1", "autonomy": "L4", "impact": "I1", "owner": "Peri", "status": "draft", "risk": "high", "posture": "Strict human control", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+   {
+      "id": "L4-I1",
+      "autonomy": "L4",
+      "impact": "I1",
+      "owner": "Peri",
+      "status": "draft",
+      "risk": "high",
+      "posture": "Strict human control",
+      "scenario": "Delegated autonomous agent - supervised by exception. Impact: limited, minor/localized/reversible.",
+      "controls": [
+        "HITL approval on the closure rule itself, though instances execute autonomously",
+        "Transaction/volume limits",
+        "Immutable approval logs, tagged machine-closed",
+        "Tested rollback"
+      ],
+      "approval": "None per closure instance. Approval attaches to the closure policy/rule - who signed off the confidence threshold and scope, when, at what authority.",
+      "rollback": "Version-pinned closure rule with tested revert path; reopen any closed alert from the immutable log.",
+      "sources": ["FCA Enforcement 2024"]
+    },
     { "id": "L4-I2", "autonomy": "L4", "impact": "I2", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L4-I3", "autonomy": "L4", "impact": "I3", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
 
