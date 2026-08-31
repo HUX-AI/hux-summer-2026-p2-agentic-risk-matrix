@@ -102,8 +102,26 @@
     { "id": "L3-I1", "autonomy": "L3", "impact": "I1", "owner": "Asli & Beste", "status": "draft", "risk": "high", "posture": "Restricted deployment", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L3-I2", "autonomy": "L3", "impact": "I2", "owner": "Asli & Beste", "status": "draft", "risk": "high", "posture": "Strict human approval", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L3-I3", "autonomy": "L3", "impact": "I3", "owner": "Asli & Beste", "status": "draft", "risk": "high", "posture": "Restricted autonomy / dual approval", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
-
-    { "id": "L4-I0", "autonomy": "L4", "impact": "I0", "owner": "Peri", "status": "draft", "risk": "high", "posture": "Restricted deployment", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
+{
+      "id": "L4-I0",
+      "autonomy": "L4",
+      "impact": "I0",
+      "owner": "Peri",
+      "status": "draft",
+      "risk": "high",
+      "posture": "Restricted deployment",
+      "scenario": "Delegated autonomous agent - supervised by exception.",
+      "controls": [
+        "Formal assurance/sign-off before deployment",
+        "Continuous monitoring",
+        "Immutable audit log",
+        "Kill switch"
+      ],
+      "approval": "None per enrichment action. Approval attaches to the retrieval/enrichment scope, not each output.",
+      "rollback": "Revert to last known-good screening/enrichment configuration; kill switch to suspend enrichment pending review.",
+      "sources": ["OWASP LLM09"]
+    },
+   
     { "id": "L4-I1", "autonomy": "L4", "impact": "I1", "owner": "Peri", "status": "draft", "risk": "high", "posture": "Strict human control", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L4-I2", "autonomy": "L4", "impact": "I2", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
     { "id": "L4-I3", "autonomy": "L4", "impact": "I3", "owner": "Peri", "status": "draft", "risk": "critical", "posture": "Prohibited / redesign", "scenario": "", "controls": [], "approval": "", "rollback": "", "sources": [] },
