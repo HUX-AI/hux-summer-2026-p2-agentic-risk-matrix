@@ -313,12 +313,18 @@ need click state, copy `ScaleList.jsx` instead. Then:
 2. Import it in `app/page.js` and pass it data from `lib/content.js`.
 3. Run `npm run build`.
 
-Two rules that will save you an afternoon:
+Three rules that will save you an afternoon:
 
 - Attribute selectors like `[data-risk="high"]` **fail the build** inside a
   `.module.css` file. Put them in `app/globals.css`.
 - Add `'use client'` at the top only if the component uses `useState` or event
   handlers.
+- **Check your component at phone width** — drag the browser window narrow (or
+  open device mode in dev tools) before opening the pull request. Layouts should
+  reflow or stack on small screens; if something is genuinely too wide to reflow,
+  wrap it in a container with `overflow-x: auto` so it scrolls sideways on its
+  own, the way the matrix grid does — the page itself must never scroll
+  horizontally.
 
 ### If you use Claude Code
 
