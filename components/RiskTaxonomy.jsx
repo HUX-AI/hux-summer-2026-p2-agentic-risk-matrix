@@ -21,7 +21,7 @@
 import { useState } from 'react';
 import styles from './RiskTaxonomy.module.css';
 
-export default function RiskTaxonomy({ taxonomy }) {
+export default function RiskTaxonomy({ taxonomy, footnote, amplifierLead }) {
   const [allOpen, setAllOpen] = useState(false);
   const [generation, setGeneration] = useState(0);
 
@@ -41,7 +41,8 @@ export default function RiskTaxonomy({ taxonomy }) {
     <div>
       <div className={styles.toolbar}>
         <p className={styles.count}>
-          {families.length} families &middot; {domainCount} domains &middot; {riskCount} child risks
+          {families.length} families &middot; {domainCount} domains &middot; {riskCount} observable
+          failure modes &middot; mapped to the OWASP Top 10 for Agentic Applications
         </p>
         <button type="button" className={styles.toggle} onClick={toggleAll}>
           {allOpen ? 'Collapse all' : 'Expand all'}
@@ -61,7 +62,8 @@ export default function RiskTaxonomy({ taxonomy }) {
                   <span className={styles.domainId}>{domain.id}</span>
                   <span className={styles.domainName}>{domain.name}</span>
                   <span className={styles.domainMeta}>
-                    {domain.code} · {domain.riskType}
+                    {domain.code} · {domain.riskType} · {domain.owasp} ·{' '}
+                    {domain.risks.length} failure modes
                   </span>
                 </summary>
                 <ul className={styles.risks}>
@@ -72,24 +74,28 @@ export default function RiskTaxonomy({ taxonomy }) {
                     </li>
                   ))}
                 </ul>
+                <div className={styles.domainDetail}>
+                  <p className={styles.domainLabel}>If it fails</p>
+                  <p className={styles.domainBody}>{domain.scenario}</p>
+                  <p className={styles.domainLabel}>Typical triggers</p>
+                  <p className={styles.domainBody}>{domain.triggers}</p>
+                  <p className={styles.domainLabel}>Control themes</p>
+                  <p className={styles.domainBody}>{domain.controlThemes}</p>
+                </div>
               </details>
             ))}
           </div>
         </section>
       ))}
 
-      <p className={styles.footnote}>
-        Child risks are the unit of assessment. A control cites a child ID such as B.2.1, never a
-        family or domain alone.
-      </p>
+      <p className={styles.footnote}>{footnote}</p>
 
       {amplificationFactors?.length > 0 && (
         <div className={styles.amplifiers}>
-          <h3 className={styles.amplifiersHead}>Risk amplification factors</h3>
-          <p className={styles.amplifiersLead}>
-            Deployment conditions that raise the impact of any failure mode above, whichever domain
-            it comes from.
-          </p>
+          <h3 className={styles.amplifiersHead}>
+            {amplificationFactors.length === 6 ? 'Six amplification factors' : 'Amplification factors'}
+          </h3>
+          <p className={styles.amplifiersLead}>{amplifierLead}</p>
           <ul className={styles.amplifierList}>
             {amplificationFactors.map((factor) => (
               <li key={factor.name} className={styles.amplifier}>

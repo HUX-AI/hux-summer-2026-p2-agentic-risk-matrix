@@ -31,6 +31,16 @@
 }
 @media (max-width: 40rem) { .detail { padding-left: 3.75rem; } }
 
+.oversight {
+  margin: -0.5rem 0 1rem;
+  padding-left: 3.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
 .footnote {
   font-family: var(--font-mono);
   font-size: 0.6875rem;

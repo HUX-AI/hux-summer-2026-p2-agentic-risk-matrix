@@ -1,0 +1,74 @@
+{
+  "_comment": "Scenario library, from the final report Appendix D. \"distribution\" is the count of use cases written at each autonomy level across the whole library (sixteen); \"cards\" are the ones annotated and tested in full. A card's autonomy/impact pair must exist in scales.json - its colour and posture are looked up from matrix.json, never written here.",
+  "lead": "Sixteen use cases span every autonomy level, drawn from criminal justice, GMP biologics manufacturing, retail, banking, security operations, construction, education, child safeguarding, software engineering and internal knowledge work. Eight were run through the full instrument; the cards published below are the annotated and tested ones.",
+  "footnote": "The risk level on each card is the assessor's qualitative judgement at the time of writing and may differ from the rating the tool computes. Where the two differ, the tool's rating is the floor and the card records the assessor's view.",
+  "distributionLabel": "Scenarios per autonomy level",
+  "distribution": [
+    { "id": "L0", "count": 2 },
+    { "id": "L1", "count": 2 },
+    { "id": "L2", "count": 3 },
+    { "id": "L3", "count": 3 },
+    { "id": "L4", "count": 4 },
+    { "id": "L5", "count": 2 }
+  ],
+  "cards": [
+    {
+      "code": "SC-01",
+      "autonomy": "L1",
+      "impact": "I3",
+      "name": "Judiciary advisory risk scoring",
+      "task": "Generate a risk score from defendant history, summarise case law, flag inconsistent rulings and draft a research memo.",
+      "fields": [
+        { "label": "Domain", "value": "Judiciary and criminal justice: sentencing and pretrial. Users are judges, magistrates, clerks and registrars." },
+        { "label": "Data accessed", "value": "Defendant criminal history, risk-model inputs, case law, dockets and sentencing guidelines — all read-only." },
+        { "label": "Why I3", "value": "The output is information only, but the class is assessed on the decision it feeds: once a judge relies on the score for an outcome already served, the effect is irreversible." },
+        { "label": "Human control", "value": "Formally required, weak as a real-time check: nothing catches anchoring in the moment, only on appeal." },
+        { "label": "Key risk", "value": "Automation bias; proprietary methodology hard for the defence to challenge; disputed disparity in error rates." },
+        { "label": "Required controls", "value": "Written disclosure of the tool's limits in every presentence report; the score may not be sole or determinative; local validation; right to contest scored factors." },
+        { "label": "Citations", "value": "Loomis (2016); Angwin et al. (2016); Dieterich et al. (2016); Courts and Tribunals Judiciary (2025); EU AI Act Annex III 8(a), Art. 6(3)." }
+      ]
+    },
+    {
+      "code": "SC-05",
+      "autonomy": "L4",
+      "impact": "I0",
+      "name": "Internal read-only research assistant",
+      "task": "Retrieve, read and summarise internal and external sources, and draft notes into the user's own workspace.",
+      "fields": [
+        { "label": "Domain", "value": "Internal knowledge work. Users are staff carrying out desk research." },
+        { "label": "Data accessed", "value": "Internal knowledge sources and public material — all read-only." },
+        { "label": "Why I0", "value": "Read-only on every source; writes only to the user's own workspace, so nothing leaves it to be reversed." },
+        { "label": "Human control", "value": "Post-hoc and periodic rather than per-action, which the impact class permits." },
+        { "label": "Key risk", "value": "Scope creep from read-only research into acting on what it finds." },
+        { "label": "Required controls", "value": "Read-only permissioning enforced technically rather than by policy; no external posting; periodic spot-check against source." },
+        { "label": "Assessor note", "value": "The tool's grid returns 2.0 at L4 by I0. The assessor recorded low, on the grounds that the agent has no external reach and nothing to reverse." }
+      ]
+    },
+    {
+      "code": "GMP",
+      "autonomy": "L2",
+      "impact": "I3",
+      "name": "Regulated documentation drafting, GMP biologics",
+      "task": "Draft regulated manufacturing documentation for human sign-off; the agent cannot file anything itself.",
+      "fields": [
+        { "label": "Resolved posture", "value": "Mandatory verified sign-off. One draft of the matrix prohibited agent-drafted regulated documentation outright; the reconciled cell requires verified sign-off instead." },
+        { "label": "Validation change", "value": "This case changed the instrument: human review and substantive source verification had been treated as equivalent, which in a regulated documentation setting they are not. The control text now requires verified sign-off and names rubber-stamping as the failure it prevents." },
+        { "label": "Citations", "value": "21 C.F.R. pt. 11; Mata v. Avianca (2023); FDA draft guidance on AI in regulatory decision-making (2025)." }
+      ]
+    },
+    {
+      "code": "FLEET",
+      "autonomy": "L5",
+      "impact": "I3",
+      "name": "Autonomous fleet remediation",
+      "task": "Diagnose and remediate faults across a fleet autonomously, with production access and no per-action approval.",
+      "fields": [
+        { "label": "Base rating", "value": "Tier 4 at the outset: high-impact autonomous execution combined with critical impact." },
+        { "label": "Amplifiers", "value": "The amplifier score would escalate the rating further; the scoring model is capped at tier 4." },
+        { "label": "Control coverage", "value": "Thirteen of fifteen control points — 87%, which the tool bands as strong." },
+        { "label": "Status", "value": "Unacceptable as configured. Strong coverage does not clear a tier-4 exposure." },
+        { "label": "Required changes", "value": "Reduce the agent's autonomy; require human approval for critical changes; introduce a canary rollout that stops on failure; test rollback and emergency isolation before wider use." }
+      ]
+    }
+  ]
+}

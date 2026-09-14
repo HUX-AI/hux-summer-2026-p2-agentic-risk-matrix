@@ -1,0 +1,76 @@
+{
+  "_comment": "The two instruments from the final report: the classification tree (Appendix B, Table B1) and the scoring model (Appendix E, Tables E2 and E3). The numbers in \"scoring\" are PROJECT CALIBRATION CONSTANTS - they derive from no external standard and no sensitivity analysis was run on them. If the workbook changes a weight or a threshold, change it here; do not re-derive it in a component.",
+
+  "tree": {
+    "lead": "Seven yes-or-no questions assign the autonomy level. An eighth question assesses impact separately and never changes the level. Answer them for a system you have in mind.",
+    "impactQuestion": "Q8 — can those actions significantly or irreversibly affect users, finances, legal obligations, sensitive data or business systems?",
+    "restartNote": "Q4 returned you to the start: an agent that can neither prepare nor execute an action resolves at L0 or L1.",
+    "footnote": "Q4 is a gate rather than a level: an agent that can neither prepare nor execute an action has been misread earlier in the tree, and the assessor is returned to the start. Q6 and Q7 are two routes to the same place — an agent outside predefined bounds is at L5 whether or not it sets its own objective.",
+    "questions": [
+      { "id": "Q1", "text": "Does the agent only generate information or content, without making recommendations or taking any action?", "short": "Information only", "yes": "L0", "no": "Q2" },
+      { "id": "Q2", "text": "Does the agent only provide advice or recommendations, without preparing or executing any action?", "short": "Advice only", "yes": "L1", "no": "Q3" },
+      { "id": "Q3", "text": "Can the agent prepare an action or output for a human to execute, without being able to execute it itself?", "short": "Prepares for a human", "yes": "L2", "no": "Q4" },
+      { "id": "Q4", "text": "Can the agent execute the action itself, through tools or external systems?", "short": "Can execute itself", "yes": "Q5", "no": "RESTART" },
+      { "id": "Q5", "text": "Is explicit human approval required before the agent executes each action?", "short": "Approval per action", "yes": "L3", "no": "Q6" },
+      { "id": "Q6", "text": "Is the agent confined to predefined rules, tools, permissions and workflow boundaries?", "short": "Confined to bounds", "yes": "Q7", "no": "L5" },
+      { "id": "Q7", "text": "Can the agent set or revise its own objective, rather than pursuing one given to it?", "short": "Sets own objective", "yes": "L5", "no": "L4" }
+    ]
+  },
+
+  "scoring": {
+    "lead": "The instrument takes a base rating from the matrix, escalates it by an amplifier score, caps it at the top tier, and reports control coverage separately. Coverage never lowers the inherent tier. These are project calibration rules, not derived standards.",
+    "note": "Amplifiers can make a posture stricter; they cannot make it weaker, and existing controls never reduce the inherent tier. Evidence readiness is reported separately and is never folded into the coverage figure.",
+    "amplifierGroups": [
+      { "key": "action", "label": "Action type", "options": ["read", "write, transact or delegate", "modify production"] },
+      { "key": "reversibility", "label": "Reversibility", "options": ["full", "partial", "difficult", "irreversible"] }
+    ],
+    "flags": [
+      { "key": "external", "label": "External system access", "weight": 1 },
+      { "key": "sensitive", "label": "Sensitive or regulated data", "weight": 1 },
+      { "key": "financial", "label": "Financial or value transfer", "weight": 1 },
+      { "key": "production", "label": "Production or privileged access", "weight": 2 },
+      { "key": "vulnerable", "label": "Vulnerable or regulated users", "weight": 1 },
+      { "key": "multiAgent", "label": "Multi-agent delegation (reserved)", "weight": 1 },
+      { "key": "persistent", "label": "Persistent or long-running autonomy", "weight": 1 },
+      { "key": "velocity", "label": "High-speed or high-volume execution", "weight": 1 }
+    ],
+    "escalationThresholds": [
+      { "atLeast": 9, "tiers": 2 },
+      { "atLeast": 6, "tiers": 1 }
+    ],
+    "controlPoints": [
+      { "key": "approval", "label": "Human approval", "options": ["none", "exception only", "before high-impact actions", "before every consequential action"] },
+      { "key": "permission", "label": "Permission model", "options": ["none or broad", "role-based", "least privilege", "least privilege + allowlist"] },
+      { "key": "limits", "label": "Action limits", "options": ["none", "basic", "defined thresholds", "thresholds + anomaly checks"] },
+      { "key": "monitoring", "label": "Monitoring", "options": ["none", "basic logs", "audit logs + exception monitoring", "real-time monitoring and alerts"] },
+      { "key": "rollback", "label": "Rollback", "options": ["none", "manual recovery", "documented and tested"] },
+      { "key": "kill", "label": "Kill switch", "options": ["no", "yes"] }
+    ],
+    "coverageBands": [
+      { "below": 40, "label": "weak" },
+      { "below": 70, "label": "partial" },
+      { "below": 85, "label": "substantial" },
+      { "below": 101, "label": "strong" }
+    ],
+    "minimumPointsByTier": { "1": 4, "2": 7, "3": 11, "4": 11 },
+    "evidenceStates": ["Not assessed", "Design evidence only", "Implementation evidence available", "Operating effectiveness tested"],
+    "unacceptableStatus": "Unacceptable as configured. Do not deploy in the assessed configuration: reduce autonomy, reduce impact, or otherwise change the operating envelope, then reassess. Coverage does not clear a tier-4 exposure.",
+    "workedExample": {
+      "label": "Load the worked example — autonomous fleet remediation",
+      "autonomy": "L5",
+      "impact": "I3",
+      "amplifiers": { "action": 2, "reversibility": 3 },
+      "flags": ["external", "sensitive", "financial", "production", "persistent", "velocity"],
+      "controls": { "approval": 2, "permission": 3, "limits": 2, "monitoring": 3, "rollback": 2, "kill": 1 },
+      "evidence": "Implementation evidence available"
+    },
+    "defaults": {
+      "autonomy": "L3",
+      "impact": "I2",
+      "amplifiers": { "action": 1, "reversibility": 1 },
+      "flags": ["external", "sensitive"],
+      "controls": { "approval": 2, "permission": 2, "limits": 2, "monitoring": 2, "rollback": 1, "kill": 1 },
+      "evidence": "Design evidence only"
+    }
+  }
+}

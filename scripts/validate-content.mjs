@@ -63,6 +63,22 @@ if (scales) {
   autonomyIds = (scales.autonomyLevels || []).map((l) => l.id);
   impactIds = (scales.impactClasses || []).map((i) => i.id);
   riskIds = (scales.riskLegend || []).map((r) => r.id);
+
+  (scales.autonomyLevels || []).forEach((level, i) => {
+    if (!isNonEmptyString(level.oversight)) {
+      fail('scales.json', `autonomy level ${i + 1} ("${level.id}"): "oversight" is missing or empty.`);
+    }
+  });
+
+  (scales.riskLegend || []).forEach((entry, i) => {
+    if (!Number.isInteger(entry.tier)) {
+      fail(
+        'scales.json',
+        `risk legend ${i + 1} ("${entry.id}"): "tier" must be a whole number. ` +
+          `The grid, the classifier and the scoring tool all label cells by tier.`
+      );
+    }
+  });
 }
 
 /* ---------- 2. literature.json ----------------------------------------- */
@@ -147,6 +163,24 @@ if (matrix) {
       }
       if (!isNonEmptyString(cell.posture)) {
         fail('matrix.json', `${where}: "posture" is the label shown in the grid and cannot be empty.`);
+      }
+      if (typeof cell.annotated !== 'boolean') {
+        fail(
+          'matrix.json',
+          `${where}: "annotated" must be true or false.\n` +
+            `      true means a scenario card was researched for this cell; false means the scenario, ` +
+            `controls, approval and rollback below are the generic tier floor.`
+        );
+      }
+      if (cell.annotated === false && (cell.sources || []).length > 0) {
+        fail(
+          'matrix.json',
+          `${where}: cites a source but is marked "annotated": false. ` +
+            `A cell carrying its own evidence is an annotated cell — set "annotated" to true.`
+        );
+      }
+      if ('reconciliation' in cell && !isNonEmptyString(cell.reconciliation)) {
+        fail('matrix.json', `${where}: "reconciliation" is present but empty. Remove the field or write the note.`);
       }
 
       // Published cells have to actually say something.

@@ -17,13 +17,27 @@
  *   all its data as props from app/page.js, which reads the files on the
  *   server at build time. Keep it that way — do not import from lib/content.js
  *   here, it will not work in the browser.
+ *
+ *   The classification tree lives in a different section of the page and needs
+ *   to be able to select a cell here. Rather than lifting state up through
+ *   three unrelated sections, it fires a `matrix:select` event on window with
+ *   the cell id; this component listens for it. Both ends are commented — if
+ *   you rename the event, rename it in ClassificationTree.jsx too.
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ControlMatrix.module.css';
+
+export const SELECT_EVENT = 'matrix:select';
 
 export default function ControlMatrix({ cells, autonomyLevels, impactClasses, riskLegend, showDrafts }) {
   const [selectedId, setSelectedId] = useState('L0-I3');
+
+  useEffect(() => {
+    const onSelect = (event) => setSelectedId(event.detail);
+    window.addEventListener(SELECT_EVENT, onSelect);
+    return () => window.removeEventListener(SELECT_EVENT, onSelect);
+  }, []);
 
   const byId = Object.fromEntries(cells.map((c) => [c.id, c]));
   const selected = byId[selectedId];
@@ -39,7 +53,8 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
       <div className={styles.scroller}>
         <table className={styles.grid}>
           <caption className={styles.caption}>
-            Select any cell to see its control set. Rows are impact, columns are autonomy.
+            Select any cell for its control set. Rows are impact, columns are autonomy. Postures are
+            the reconciled values at Table C1; tiers are their numeric form at Table E1.
           </caption>
           <thead>
             <tr>
@@ -68,6 +83,7 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
                   const cell = byId[`${level.id}-${impact.id}`];
                   if (!cell) return <td key={level.id} className={styles.cell} />;
                   const hidden = isHidden(cell);
+                  const tier = riskById[cell.risk]?.tier;
                   return (
                     <td key={level.id} className={styles.cell}>
                       <button
@@ -77,7 +93,7 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
                         aria-label={
                           hidden
                             ? `${level.id} × ${impact.id} — in progress`
-                            : `${level.id} × ${impact.id} — ${cell.posture} — ${riskById[cell.risk]?.label} risk`
+                            : `${level.id} × ${impact.id} — ${cell.posture}, tier ${tier}`
                         }
                         className={[
                           styles.cellButton,
@@ -89,8 +105,9 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
                         <span className={styles.cellPosture}>
                           {hidden ? 'In progress' : cell.posture}
                         </span>
+                        {!hidden && <span className={styles.cellTier}>tier {tier}</span>}
                         {cell.status === 'draft' && showDrafts && (
-                          <span className={styles.cellDraft}>draft</span>
+                          <span className={styles.cellTier}>draft</span>
                         )}
                       </button>
                     </td>
@@ -117,20 +134,20 @@ export default function ControlMatrix({ cells, autonomyLevels, impactClasses, ri
 
 function CellDetail({ cell, risk, autonomy, impact, hidden }) {
   return (
-    <article className={styles.detail} aria-live="polite">
+    <article className={styles.detail} data-risk={hidden ? 'empty' : cell.risk} aria-live="polite">
       <header className={styles.detailHead}>
-        <span className={styles.detailId} data-risk={hidden ? 'empty' : cell.risk}>
+        <span className={styles.detailId}>
           {cell.autonomy} × {cell.impact}
         </span>
         <div>
           <h3 className={styles.detailPosture}>{hidden ? 'Not yet published' : cell.posture}</h3>
           <p className={styles.detailAxes}>
-            {autonomy?.name} — {autonomy?.summary}. Impact: {impact?.name.toLowerCase()}, {impact?.summary.toLowerCase()}.
+            {autonomy?.name} — {afterColon(autonomy?.detail)} Oversight:{' '}
+            {autonomy?.oversight.toLowerCase()}. Impact: {impact?.name.toLowerCase()},{' '}
+            {impact?.summary.toLowerCase()}.
           </p>
         </div>
-        <span className={styles.detailRisk} data-risk={hidden ? 'empty' : cell.risk}>
-          {hidden ? '—' : risk?.label}
-        </span>
+        <span className={styles.detailRisk}>{hidden ? '—' : `Tier ${risk?.tier}`}</span>
       </header>
 
       {hidden ? (
@@ -144,7 +161,9 @@ function CellDetail({ cell, risk, autonomy, impact, hidden }) {
 
           <div className={styles.detailCols}>
             <div>
-              <h4 className={styles.detailLabel}>Required controls</h4>
+              <h4 className={styles.detailLabel}>
+                {cell.annotated ? 'Required controls' : `Required controls at tier ${risk?.tier}`}
+              </h4>
               <ul className={styles.controlList}>
                 {cell.controls.map((control) => (
                   <li key={control}>{control}</li>
@@ -169,10 +188,23 @@ function CellDetail({ cell, risk, autonomy, impact, hidden }) {
               ))}
             </p>
           )}
+
+          {cell.reconciliation && (
+            <p className={styles.reconciliation}>
+              <span className={styles.detailLabel}>Reconciled cell</span>
+              {cell.reconciliation}
+            </p>
+          )}
         </>
       )}
     </article>
   );
+}
+
+/* "Prepare action, human executes: agent drafts; human signs." -> "agent drafts; human signs." */
+function afterColon(definition = '') {
+  const i = definition.indexOf(':');
+  return i === -1 ? definition : definition.slice(i + 1).trim();
 }
 
 export function slugify(str) {

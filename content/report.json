@@ -1,0 +1,93 @@
+{
+  "_comment": "The list-shaped parts of the report: things that are a table or an enumerated set rather than flowing prose. Flowing prose lives in content/sections/*.md. If you are adding a paragraph, it belongs there; if you are adding a row to something the page renders as a list or a table, it belongs here.",
+
+  "masthead": {
+    "eyebrow": "HUX AI · Research Internship · Project 2 · Summer 2026",
+    "title": "Making Autonomy Governable: A Risk Control Matrix for Tool-Using AI Agents",
+    "standfirst": "A governance instrument that separates what an agent is permitted to do from what happens when it is wrong, and states the control posture, evidence and rollback owed at each intersection.",
+    "published": "September 2026",
+    "team": [
+      "Aslınur Alkan",
+      "Benjamin Hong",
+      "Beste Özyurt Ersöz",
+      "Bhoomika Hanbal Puttaswamy",
+      "Frances Chinaza Agba",
+      "Kevin Braza",
+      "Peri Yakar",
+      "Shalom Chimkwesiri Okeke"
+    ],
+    "mentors": ["Ece Sülüngür", "Hayriye Anıl", "Sami Tuğal", "Merve Ayyüce Kızrak"]
+  },
+
+  "summaryAssets": [
+    { "n": "01", "name": "Risk taxonomy", "note": "Three families, nine domains, thirty-one observable failure modes, indexed to the OWASP Top 10 for Agentic Applications." },
+    { "n": "02", "name": "Autonomy model", "note": "Six levels with a seven-question classification tree that assigns a use case to a level reproducibly." },
+    { "n": "03", "name": "Scenario library", "note": "Sixteen use cases spanning every level, four annotated in full." },
+    { "n": "04", "name": "Control matrix", "note": "A posture at each of the twenty-four intersections, with the evidence required at each autonomy level." }
+  ],
+
+  "findings": {
+    "label": "Two findings",
+    "items": [
+      "Autonomy and impact must be assessed separately. An advisory system that cannot act may still influence criminal sentencing; an autonomous system may be confined to read-only access. One combined score rates both wrongly.",
+      "Controls do not erase inherent risk. Coverage is reported separately from exposure, so a deployment can hold 87% of its expected controls and still need redesign."
+    ]
+  },
+
+  "protocol": {
+    "steps": [
+      "Define the agent's intended action and objective. What is it for, and what is it allowed to touch?",
+      "Assess the autonomy level with the classification tree — not what the technology could do, what this deployment is permitted to do.",
+      "Assess the impact class independently of autonomy. Ask what happens when it is wrong, not when it is right.",
+      "Apply the control posture at the intersection before deployment, and record the evidence that posture requires."
+    ],
+    "note": "The posture is a floor, not a ceiling. An organisation adopting only one part of this should adopt the separation of autonomy from impact — it is the step that changes conclusions rather than presentation."
+  },
+
+  "legendNote": "Colour means risk. Nothing else on this page is coloured. Posture terms express a recommended governance posture, not a determination of legal permissibility.",
+
+  "taxonomyNote": "Child risks are the unit of assessment: a control cites a child ID such as B.2.1, never a family or domain alone. C.2 has no clean OWASP counterpart. The operational register expands the same nine domains to fifty-four modes at the same grain; no new level of hierarchy was introduced.",
+
+  "amplifierLead": "An amplifier raises the likelihood, scale, speed, severity or detection difficulty of a risk without being a failure itself. Amplifiers are held outside the taxonomy and escalate a rating rather than feeding a probability.",
+
+  "reconciliation": {
+    "lead": "Sixteen of the twenty-four intersections agreed across every version. The eight below did not. Disagreement was reconstructed at the end by comparing the surviving versions, and is published rather than smoothed over.",
+    "headers": ["Cell", "Column-authored", "Review copy", "Resolved", "Basis"],
+    "rows": [
+      { "cell": "I0 × L2", "column": "Permitted, light-touch verification", "review": "Supervised", "resolved": "Supervised", "basis": "Unevidenced. Judgement." },
+      { "cell": "I0 × L3", "column": "Auto-approved / supervised", "review": "Supervised", "resolved": "Supervised", "basis": "Unevidenced. Judgement." },
+      { "cell": "I0 × L4", "column": "Restricted", "review": "Restricted", "resolved": "Restricted", "basis": "Unevidenced. Judgement. The tool sheet had supervised / conditional." },
+      { "cell": "I1 × L0", "column": "Supervised", "review": "Permitted", "resolved": "Supervised", "basis": "Evidenced. Moffatt v. Air Canada (2024): an organisation owns what its information-only chatbot says." },
+      { "cell": "I1 × L3", "column": "Restricted", "review": "Restricted", "resolved": "Restricted", "basis": "Unevidenced. Judgement. The tool sheet had supervised." },
+      { "cell": "I2 × L0", "column": "Restricted", "review": "Supervised", "resolved": "Restricted", "basis": "Evidenced. The NYC MyCity incident (Lecher, 2024): an information-only public-sector bot giving unlawful guidance at scale, with disclaimers, left online after publication." },
+      { "cell": "I3 × L2", "column": "Draft-only, mandatory verified sign-off", "review": "Prohibited / redesign", "resolved": "Mandatory verified sign-off", "basis": "Evidenced. The permitting cell cites 21 C.F.R. pt. 11, Mata v. Avianca and draft FDA guidance; the prohibiting cell recorded no scenario, controls or citation." },
+      { "cell": "I3 × L3", "column": "Avoid if possible / strict oversight", "review": "Restricted autonomy / dual approval", "resolved": "Restricted / dual approval", "basis": "Labels differ, substance agrees." }
+    ],
+    "note": "Where no version recorded a basis, the resolved value is the one consistent with the surrounding row; where the drafts still differed, the stricter reading was taken. One inconsistency was corrected in review: at significant impact, advice-only moved from supervised to restricted so that increasing autonomy or impact never weakens the control requirement."
+  },
+
+  "limitations": {
+    "lead": "Properties of the method, stated so a reader can judge how far the instrument's outputs can be relied on.",
+    "items": [
+      { "name": "Literature selection", "statement": "Sources were selected for standing with the intended audience, not by systematic search. The evidence base is a purposive sample, not a systematic review." },
+      { "name": "Control matrix", "statement": "Columns were assigned independently and reconciled at the end of the project rather than continuously, and documentation depth still varies across the six columns." },
+      { "name": "Calibration constants", "statement": "The base grid, amplifier weights, escalation thresholds and coverage bands are project calibration rules. No sensitivity analysis was performed and they derive from no external standard." },
+      { "name": "Internal validation only", "statement": "The instrument was calibrated against the team's own judgement across eight scenarios, and has not been applied by an external assessor or used in a live engagement." },
+      { "name": "Scenario domain coverage", "statement": "Scenarios were sampled for coverage across autonomy levels, not risk domains; several domains carry no scenario. Coverage claims concern the ladder, not the taxonomy." },
+      { "name": "Evidence checklist", "statement": "Twenty-two of the thirty evidence entries are written; the highest-autonomy column and part of one other are not." },
+      { "name": "Single-agent scope", "statement": "Version one addresses single-agent deployments. Inter-agent communication and cascading failure are named in the taxonomy but not exercised." },
+      { "name": "Crosswalk not delivered", "statement": "Mapping to ISO/IEC 42001 Annex A control identifiers was in scope at the outset and was not completed; it remains future work." },
+      { "name": "Judgement is recorded, not removed", "statement": "Ratings involve judgement. Disagreement was reconstructed at the end by comparing the surviving versions, and is published rather than smoothed over." }
+    ]
+  },
+
+  "disclosure": {
+    "label": "AI use disclosure",
+    "body": "Generative AI tools were used for drafting support, presentation materials, formatting and language, citation verification and consistency checking. The research questions, taxonomy, autonomy model, scenario library, matrix postures, calibration rules and all findings were developed and decided by the research team. A team member read and verified every cited source against its primary; the authors take full responsibility for the report's accuracy and integrity."
+  },
+
+  "colophon": [
+    "Produced during the HUX AI Research Internship, Summer 2026. Thanks to Işıl Selen Denemeç and Raghad Al-Moqayad for feedback on the assessment approach.",
+    "This matrix is a governance instrument, not an assurance certificate."
+  ]
+}
