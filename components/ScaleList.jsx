@@ -21,6 +21,7 @@ export default function ScaleList({ items, idLabel }) {
             <span className={styles.short}>{item.summary}</span>
           </summary>
           <p className={styles.detail}>{item.detail}</p>
+          {item.oversight && <p className={styles.oversight}>Oversight: {item.oversight}</p>}
         </details>
       ))}
       <p className={styles.footnote}>{idLabel}</p>

@@ -7,6 +7,14 @@
   Adding a brand accent anywhere else makes the risk colours read as decoration.
   Everything outside the grid is achromatic on purpose.
 
+  ONE EXCEPTION, and it is the only one: the masthead orb. It is bled off the
+  top-right corner at 0.45 opacity, behind the text, above the fold and never
+  within sight of a risk swatch. It is an atmospheric wash, not an accent — it
+  marks no element, carries no state and labels nothing. Do not extend this to
+  a second element: a coloured button, link, rule or icon anywhere on the page
+  is what the rule exists to prevent, and adding one makes the orb read as the
+  start of a palette rather than the exception it is.
+
   All tokens live here. Change a value once and it changes everywhere.
 */
 
@@ -72,11 +80,12 @@ body {
 h1 {
   font-family: var(--font-mono);
   font-weight: 500;
-  font-size: clamp(1.75rem, 5vw, 2.75rem);
-  line-height: 1.12;
+  font-size: clamp(1.75rem, 4.2vw, 2.5rem);
+  line-height: 1.14;
   letter-spacing: -0.02em;
   margin: 0 0 1.25rem;
-  max-width: 20ch;
+  max-width: 30ch;
+  text-wrap: pretty;
 }
 
 h2 {
@@ -110,15 +119,102 @@ code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
 .wrap { max-width: 78rem; margin: 0 auto; padding: 0 var(--gutter); }
 .narrow { max-width: 46rem; }
 
-.masthead { padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
-.masthead p { color: var(--ink-soft); font-size: 1.125rem; }
+.masthead {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
+}
+.masthead-inner { position: relative; }
 
-/* The HUX icon, and only the icon: monochrome, small, no tagline lockup.
-   The wordmark variants in assets/ stay off the page — this is a research
-   artifact, not a marketing site. */
-.masthead-mark { display: block; height: 3.125rem; width: auto; margin-bottom: 1.75rem; }
+/* Decorative only, and the single documented exception to the colour rule
+   above. Bled off the corner so no edge of it is visible; pointer-events off
+   so it never intercepts a click on the text it sits behind. */
+.masthead-orb {
+  position: absolute;
+  top: -17rem;
+  right: -13rem;
+  width: 36rem;
+  height: 36rem;
+  opacity: 0.45;
+  pointer-events: none;
+}
+@media (max-width: 48rem) {
+  .masthead-orb { width: 24rem; height: 24rem; top: -11rem; right: -9rem; }
+}
+
+.masthead-lockup { display: block; height: 4.25rem; width: auto; margin-bottom: 2rem; }
+@media (max-width: 30rem) { .masthead-lockup { height: 3.25rem; } }
+
+.standfirst { color: var(--ink-soft); font-size: 1.125rem; margin-bottom: 1.75rem; max-width: 52ch; }
+
+.credits {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.5rem 2.5rem;
+  max-width: 64rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+}
+
+.credits dt {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+.credits dt ~ dt { margin-top: 1.25rem; }
+.credits dd { margin: 0; font-size: 0.9375rem; }
+
+.credit-names {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.25rem 1.5rem;
+}
+.credit-names-single { grid-template-columns: 1fr; }
+
+/* The footer keeps the small monochrome icon — no lockup, no tagline. */
+.footer-mark { display: block; height: 2.25rem; width: auto; margin-bottom: 1.5rem; opacity: 0.8; }
 
 section.band { padding: clamp(2.5rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--rule); }
+
+.two-up {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 2.5rem;
+}
+
+.column-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.75rem;
+  max-width: none;
+}
+
+.footnote {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  color: var(--ink-faint);
+  margin: 1.25rem 0 0;
+  max-width: 80ch;
+}
+
+.disclosure {
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-sunk);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.disclosure p:last-child { margin-bottom: 0; font-size: 0.9375rem; }
 
 .prose h3 { margin-top: 1.75rem; }
 .prose ol, .prose ul { max-width: var(--measure); padding-left: 1.25rem; }
@@ -132,6 +228,8 @@ footer {
   font-size: 0.75rem;
   color: var(--ink-faint);
 }
+footer p { max-width: 80ch; margin-bottom: 0.5rem; }
+footer p:last-child { margin-bottom: 0; }
 
 /* ---- Draft marker ------------------------------------------------------ */
 

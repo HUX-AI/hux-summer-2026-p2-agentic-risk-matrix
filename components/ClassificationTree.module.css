@@ -1,0 +1,125 @@
+.lead { margin: 0 0 1.5rem; max-width: var(--measure); color: var(--ink-soft); }
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.panel {
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-sunk);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.stepLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.question { font-size: 1.0625rem; margin: 0 0 1.25rem; max-width: 48ch; text-wrap: pretty; }
+
+.answers { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* Every control here clears the 44px touch target the rest of the page holds to. */
+.yes,
+.no,
+.ghostButton,
+.linkButton {
+  font-family: var(--font-mono);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.yes,
+.no {
+  font-size: 0.8125rem;
+  padding: 0.5rem 1.25rem;
+  min-height: 2.75rem;
+  text-align: left;
+}
+.yes { border: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+.no { border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink); }
+.no:hover { border-color: var(--ink); }
+
+.ghostButton {
+  font-size: 0.6875rem;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  color: var(--ink-soft);
+}
+.ghostButton:hover { border-color: var(--ink); color: var(--ink); }
+
+.levelId { font-family: var(--font-mono); font-size: 1.25rem; margin: 0 0 0.35rem; }
+.levelDefinition { font-size: 0.9375rem; color: var(--ink-soft); margin: 0 0 0.35rem; max-width: 52ch; }
+.levelOversight {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 1.5rem;
+}
+
+.result { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+
+.resultId {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 2px;
+  background: var(--risk);
+  color: #000;
+}
+
+.resultPosture { font-family: var(--font-mono); font-size: 1.0625rem; margin: 0.75rem 0 0.25rem; }
+.resultNote { font-size: 0.9375rem; color: var(--ink-soft); margin: 0 0 1rem; max-width: 52ch; }
+
+.linkButton {
+  font-size: 0.6875rem;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.historyLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.75rem;
+}
+
+.history { list-style: none; margin: 0 0 1.25rem; padding: 0; border-top: 1px solid var(--rule); }
+
+.historyRow {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 3rem;
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+
+.historyQid { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint); }
+.historyShort { font-size: 0.875rem; color: var(--ink-soft); }
+.historyAnswer { font-family: var(--font-mono); font-size: 0.75rem; text-align: right; }
+
+.footnote { font-size: 0.875rem; color: var(--ink-faint); margin: 0; max-width: 60ch; }

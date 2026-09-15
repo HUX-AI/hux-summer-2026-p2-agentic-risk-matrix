@@ -40,20 +40,41 @@ This is **not** a marketing site and **not** an app. It is a research artifact.
    colour on the page. Do not introduce a brand accent, coloured buttons,
    gradients or coloured links. This is a deliberate design decision, not an
    oversight: a decorative accent makes the risk colours read as decoration.
+   **One exception, and it is the only one:** the masthead orb
+   (`public/hux-orb.png`), bled off the top-right corner at 0.45 opacity behind
+   the title. It marks no element, carries no state and labels nothing — it is
+   an atmospheric wash above the fold, never in sight of a risk swatch. It was
+   added deliberately in September 2026 along with the tagline lockup. Do not
+   read it as permission for a second coloured element: a coloured button,
+   link, rule or icon anywhere is exactly what this rule exists to prevent, and
+   adding one makes the orb read as the start of a palette instead.
 5. **Draft content must never reach a published build.** `lib/content.js`
    redacts draft cells server-side. Hiding them in a component is not
    sufficient — hidden text still ships in the page source. If you touch
-   `getAllCells()`, keep the redaction.
+   `getAllCells()`, keep the redaction. All 24 cells are currently `published`,
+   so the redaction path has nothing to redact today — it stays in place for
+   the next cell that goes back to draft, and the check below still exercises
+   it.
 
 ## Architecture
 
 ```
 content/          Data. Edited by non-technical teammates. Treat as the source of truth.
-  matrix.json       One entry per L×I cell.
-  scales.json       Axis definitions + risk legend + audit categories.
-  taxonomy.json     Hierarchical risk taxonomy: families A–C → domains (codes R1–R9) → child risks, plus amplification factors.
+  matrix.json       One entry per L×I cell. "annotated" says whether the cell has a researched
+                    scenario card or falls back to the generic tier floor.
+  scales.json       Axis definitions (with oversight band) + tier legend + audit categories.
+  taxonomy.json     Hierarchical risk taxonomy: families A–C → domains (codes R1–R9) → child risks,
+                    each domain carrying its OWASP mapping, failure scenario, triggers and control themes,
+                    plus the amplification factors.
   literature.json   Shared reference tracker.
-  sections/*.md     Prose, with title/status front matter.
+  report.json       The list-shaped parts of the report: masthead credits, the four assets, the two
+                    findings, the protocol steps, the reconciliation table, the limitations, the
+                    AI-use disclosure and the footer colophon.
+  scenarios.json    Scenario library — the distribution across levels, plus the annotated cards.
+  assessment.json   The two instruments: the classification tree (Appendix B) and the scoring model
+                    (Appendix E). Every weight, threshold and band is a PROJECT CALIBRATION CONSTANT.
+  sections/*.md     Flowing prose, with title/status front matter. Anything list- or table-shaped
+                    belongs in report.json instead.
 
 lib/content.js    The ONLY file that reads content/. Handles draft filtering.
 app/page.js       Reads content via lib/, passes plain data down as props.
@@ -81,7 +102,19 @@ compute business rules.
 - **JavaScript, not TypeScript.** Chosen so contributors who are new to web
   development are not fighting the type checker while learning. Do not migrate.
 - **`'use client'` only where interaction state genuinely requires it.** Right
-  now: `ControlMatrix`, `ScaleList`, `ReferenceTable`, `RiskTaxonomy`.
+  now: `ControlMatrix`, `ScaleList`, `ReferenceTable`, `RiskTaxonomy`,
+  `ClassificationTree`, `AssessmentTool`, `ScenarioLibrary`. The display-only
+  components (`RiskLegend`, `ExecutiveSummary`, `ProcessSteps`,
+  `ReconciliationTable`, `StatementList`) have no directive and should not
+  acquire one.
+- **The classification tree selects a cell in the matrix through a
+  `matrix:select` window event**, not shared state — the two sections are four
+  bands apart and lifting state would make `app/page.js` a client component,
+  which would break the server-reads-content rule. Both ends are commented; if
+  you rename the event, rename it in both.
+- **`scoreDeployment()` in `AssessmentTool.jsx` is a pure function.** Same
+  inputs, same result, no reads of component state. Keep it that way so it can
+  be checked against the workbook line by line.
 - **Branches are `name/short-description`; commit messages are one line,
   `part: what you did`** (e.g. `L2: add I1 scenario`). Full rules in
   `CONTRIBUTING.md` → "Branch names and commit messages".
@@ -135,25 +168,39 @@ npx serve out                  # inspect the built output
 ```
 
 A change is not finished until `npm run build` passes. If you changed anything in
-`lib/content.js`, also confirm draft redaction still holds:
+`lib/content.js`, also confirm draft redaction still holds. Every cell is
+published right now, so prove it by flipping one to draft and putting it back:
 
 ```bash
-npm run build && grep -c "Restricted autonomy" out/index.html   # must be 0
+node -e "const f='content/matrix.json',d=require('./'+f);d.cells.find(c=>c.id==='L2-I3').status='draft';require('fs').writeFileSync(f,JSON.stringify(d,null,2)+'\n')"
+npm run build              && grep -c "CAPA proposal" out/index.html   # must be 0
+SHOW_DRAFTS=true npm run build && grep -c "CAPA proposal" out/index.html   # must be 1
+git checkout content/matrix.json
 ```
 
 ## Things that are deliberate and should not be "fixed"
 
-- The masthead carries the small monochrome HUX icon and nothing else — no hero
-  image, no call-to-action button, and none of the wordmark-with-tagline lockups
-  from `assets/` ("Empowering humanity, shaping tomorrow" is marketing copy and
-  stays off a research artifact). The icon is achromatic on purpose; the
-  gradient orb asset must never appear on the page (colour means risk).
+- The masthead carries the HUX wordmark-with-tagline lockup and the gradient
+  orb. Both were added deliberately in September 2026, at the team's request,
+  and both reversed an earlier rule that kept them off the page. The earlier
+  reasoning still holds for everything else: no hero image, no call-to-action
+  button, and no second coloured element anywhere. The footer keeps the small
+  monochrome icon, not the lockup.
 - Risk cells are plain coloured rectangles with no icons or gradients.
 - The `L0 × I3` cell is rated **high**, not critical. This is a researched
   position, not an error — low autonomy does not mean low impact. See the
   references cited on that cell.
 - Draft cells display as "In progress" rather than being removed from the grid.
-  Showing the shape of the unfinished work is intentional.
-- Several cells are unpublished. The site is designed to be honest about being
-  in progress, following the same convention as the reference site this was
-  modelled on.
+  Showing the shape of the unfinished work is intentional. No cell is in that
+  state today, but the behaviour is kept for the next one that is.
+- **Eight of the twenty-four cells have no researched scenario card** — the
+  whole of L3 and L5 — and they say so: `"annotated": false` makes the detail panel show the tier floor and
+  label it "Required controls at tier N". That is an honest statement about
+  research depth, not a gap to quietly fill with plausible-sounding controls.
+  Writing a card means researching the cell and citing it.
+- The classification tree and the scoring instrument compute. This reverses the
+  earlier "the site presents the matrix, it does not compute with it" line: both
+  are now published research output (report Appendices B and E), not a
+  speculative feature. Their constants live in `content/assessment.json` and
+  carry a health warning there and on the page — they are project calibration
+  rules with no external derivation and no sensitivity analysis.

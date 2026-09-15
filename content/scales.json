@@ -1,24 +1,24 @@
 {
-  "_comment": "The two axes of the matrix, plus the risk legend. Definitions must match the workbook reference scale exactly. If you change wording here, change it in the workbook too.",
+  "_comment": "The two axes of the matrix, plus the tier legend. Wording comes from the final report, Appendix B (Tables B2 and B3) and Appendix E (Table E1). If you change wording here, change it in the workbook too.",
   "autonomyLevels": [
-    { "id": "L0", "name": "No execution",       "summary": "Information only",                 "detail": "The system answers, suggests or explains. It has no tools, no write access and cannot take an action. All impact runs through a human deciding what to do with the output." },
-    { "id": "L1", "name": "Bounded assistant",  "summary": "Suggests within limits",           "detail": "Drafts and proposes inside a fixed boundary. A human executes every action." },
-    { "id": "L2", "name": "Supervised actor",   "summary": "Acts with supervision",            "detail": "Takes actions while a human watches and can intervene before or during execution." },
-    { "id": "L3", "name": "Conditional agent",  "summary": "Acts within guardrails",           "detail": "Executes autonomously inside declared guardrails, pausing for approval when it hits a restricted zone." },
-    { "id": "L4", "name": "Delegated agent",    "summary": "Supervised by exception",          "detail": "Runs bounded workflows on its own. Humans review exceptions rather than every action." },
-    { "id": "L5", "name": "Open agent",         "summary": "Minimal transaction-level control","detail": "Acts with minimal per-transaction control. Oversight is aggregate, not per action." }
+    { "id": "L0", "name": "Respond only",       "summary": "No action capability",      "oversight": "Not applicable",   "detail": "Respond only: no action capability." },
+    { "id": "L1", "name": "Advise only",        "summary": "Human decides and acts",    "oversight": "Human decides",    "detail": "Advise only: human decides and acts independently." },
+    { "id": "L2", "name": "Prepare action",     "summary": "Human executes",            "oversight": "Human in the loop","detail": "Prepare action, human executes: agent drafts; human signs, sends or files." },
+    { "id": "L3", "name": "Approved execution", "summary": "Per-action approval",       "oversight": "Human in the loop","detail": "Execute low-risk actions with approval: agent acts only after approval of that specific action." },
+    { "id": "L4", "name": "Bounded autonomy",   "summary": "No per-action approval",    "oversight": "Human on the loop","detail": "Execute bounded workflows autonomously: no per-action approval, within reversible, capped or allowlisted limits." },
+    { "id": "L5", "name": "Open autonomy",      "summary": "High-impact, unapproved",   "oversight": "Human in command", "detail": "Execute high-impact actions autonomously: no approval; action may be irreversible or high-stakes." }
   ],
   "impactClasses": [
-    { "id": "I0", "name": "Negligible",  "summary": "No material impact expected",                          "detail": "Incorrect output produced, but nothing consequential follows from it." },
-    { "id": "I1", "name": "Limited",     "summary": "Minor, localized, reversible impact",                  "detail": "Effect stays within the affected team, system or individual and is cheap to undo." },
-    { "id": "I2", "name": "Significant", "summary": "Material customer, data, financial or operational impact", "detail": "Correction is possible, but the failure already reached the user population." },
-    { "id": "I3", "name": "Critical",    "summary": "Severe, potentially irreversible or widespread impact", "detail": "Consequences cannot be restored once the output has been relied upon." }
+    { "id": "I0", "name": "Negligible",  "summary": "No risk, or easily reversible",    "detail": "Incorrect information produced before anyone acts on it." },
+    { "id": "I1", "name": "Limited",     "summary": "Reversible, small blast radius",   "detail": "Effect stays within the affected system." },
+    { "id": "I2", "name": "Significant", "summary": "Reversible, large blast radius",   "detail": "Correction possible, but the effect reached the user." },
+    { "id": "I3", "name": "Critical",    "summary": "Irreversible",                     "detail": "Financial or judicial consequences such as refunds, sentencing or filings relied upon." }
   ],
   "riskLegend": [
-    { "id": "low",      "label": "Low",                   "posture": "Permitted with baseline controls",   "note": "Standard safeguards and monitoring." },
-    { "id": "medium",   "label": "Medium",                "posture": "Supervised permission",              "note": "Additional supervision, validation and limits." },
-    { "id": "high",     "label": "High",                  "posture": "Restricted deployment",              "note": "Formal assurance and stronger human oversight." },
-    { "id": "critical", "label": "Critical",              "posture": "Regulatory & compliance assurance",  "note": "Maximum assurance and independent validation. Where even maximum assurance is insufficient for the autonomy and impact combination, the cell posture is Prohibited / redesign." }
+    { "id": "low",      "tier": 1, "label": "Tier 1 — Permitted",                    "posture": "Baseline controls",                      "note": "Standard safeguards, monitoring and a named owner." },
+    { "id": "medium",   "tier": 2, "label": "Tier 2 — Supervised",                   "posture": "Supervised or conditional deployment",   "note": "Additional supervision, validation and limits." },
+    { "id": "high",     "tier": 3, "label": "Tier 3 — Restricted",                   "posture": "Restricted deployment",                  "note": "Formal assurance, approval or verified sign-off before deployment." },
+    { "id": "critical", "tier": 4, "label": "Tier 4 — Unacceptable as configured",   "posture": "Do not deploy as assessed",              "note": "Redesign, reduce autonomy or impact, or change the operating envelope, then reassess." }
   ],
   "auditCategories": [
     { "n": 1, "name": "Evidence of risks",                 "detail": "Risk assessment, impact, classification assumptions, affected systems and stops." },

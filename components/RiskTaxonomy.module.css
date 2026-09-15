@@ -3,7 +3,8 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
 }
 
 .count {
@@ -11,6 +12,7 @@
   font-size: 0.75rem;
   color: var(--ink-faint);
   margin: 0;
+  max-width: 70ch;
 }
 
 .toggle {
@@ -84,11 +86,13 @@
   font-size: 0.875rem;
 }
 
+/* --rule-strong, not --ink-faint: on the dark summary bar --ink-faint is only
+   3.5:1 and fails AA. Light greys invert here — check against --ink, not paper. */
 .domainMeta {
   grid-column: 2;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: var(--ink-faint);
+  color: var(--rule-strong);
 }
 
 .risks {
@@ -118,12 +122,37 @@
   color: var(--ink-soft);
 }
 
+.domainDetail {
+  border-top: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  padding: 0.875rem;
+}
+
+.domainLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.3rem;
+}
+.domainLabel:not(:first-child) { margin-top: 0.75rem; }
+
+.domainBody {
+  font-size: 0.9375rem;
+  margin: 0;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
 .footnote {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
+  line-height: 1.6;
   color: var(--ink-faint);
   padding-top: 0.875rem;
   margin: 0;
+  max-width: 80ch;
 }
 
 /* ---- Amplification factors -------------------------------------------- */

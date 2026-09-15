@@ -1,5 +1,5 @@
 {
-  "_comment": "Hierarchical risk taxonomy, exported from the workbook 'Agentic AI Risk Taxonomy' sheet. Three families (A-C) hold nine domains (A.1-C.3, workbook codes R1-R9); each domain holds child risks. Child IDs are the unit of assessment - matrix cells cite children, never a family or domain alone. riskType is one of: Model-output, Governance, Action-execution.",
+  "_comment": "Hierarchical risk taxonomy v3, from the final report Appendix A (Tables A1, A2, A4 and A5). Three families (A-C) hold nine domains, which keep the workbook codes R1-R9. Child risks are the unit of assessment: a control cites a child ID such as B.2.1, never a family or domain alone. Domain ids and child ids are POSITIONAL - the second domain of B is always B.2 - so if you insert one, renumber the rest. \"owasp\" maps the domain to the OWASP Top 10 for Agentic Applications; C.2 has no clean counterpart and says so.",
   "families": [
     {
       "id": "A",
@@ -8,8 +8,12 @@
         {
           "id": "A.1",
           "code": "R1",
-          "name": "Objective & Instruction Integrity",
+          "name": "Objective & instruction integrity",
           "riskType": "Model-output",
+          "owasp": "ASI01",
+          "scenario": "The agent replies to customers with inappropriate or conflicting policy information.",
+          "triggers": "Ambiguous instructions. Prompt injection. Malicious external content.",
+          "controlThemes": "Goal validation, intent confirmation, prompt-injection controls, stop conditions.",
           "risks": [
             { "id": "A.1.1", "name": "Goal misinterpretation" },
             { "id": "A.1.2", "name": "Goal hijacking" },
@@ -21,8 +25,12 @@
         {
           "id": "A.2",
           "code": "R2",
-          "name": "Autonomy, Authority & Permission",
+          "name": "Autonomy, authority & permission",
           "riskType": "Governance",
+          "owasp": "ASI03",
+          "scenario": "The agent approves unverified high-value transactions beyond its intended authority limit.",
+          "triggers": "Misconfigured permissions. Excessive credentials. Delegated authority.",
+          "controlThemes": "Least privilege, role-based access, action allowlists, approval gates.",
           "risks": [
             { "id": "A.2.1", "name": "Unauthorised action" },
             { "id": "A.2.2", "name": "Approval bypass" },
@@ -38,8 +46,12 @@
         {
           "id": "B.1",
           "code": "R3",
-          "name": "Tool & Action Execution",
+          "name": "Tool & action execution",
           "riskType": "Action-execution",
+          "owasp": "ASI02",
+          "scenario": "The agent executes a DELETE command instead of READ on a production database.",
+          "triggers": "Model error. Tool ambiguity. Poor validation. API changes.",
+          "controlThemes": "Tool allowlisting, input validation, sandboxing, rollback, limits.",
           "risks": [
             { "id": "B.1.1", "name": "Wrong tool selected" },
             { "id": "B.1.2", "name": "Incorrect API call" },
@@ -50,8 +62,12 @@
         {
           "id": "B.2",
           "code": "R4",
-          "name": "Data, Memory & Information Boundaries",
+          "name": "Data, memory & information boundaries",
           "riskType": "Action-execution",
+          "owasp": "ASI06",
+          "scenario": "The agent emails a consolidated report containing external personal data.",
+          "triggers": "Malicious input. Weak access control. Untrusted memory.",
+          "controlThemes": "Data minimisation, loss prevention, encryption, retention limits, memory governance.",
           "risks": [
             { "id": "B.2.1", "name": "Data exfiltration" },
             { "id": "B.2.2", "name": "Unauthorised disclosure" },
@@ -61,8 +77,12 @@
         {
           "id": "B.3",
           "code": "R5",
-          "name": "Planning, Workflow & Delegation",
+          "name": "Planning, workflow & delegation",
           "riskType": "Model-output",
+          "owasp": "ASI08",
+          "scenario": "The agent gets stuck in an infinite loop, consuming API credits and blocking processes.",
+          "triggers": "Planning error. Missing dependencies. Conflicting outputs.",
+          "controlThemes": "Step validation, bounded workflows, execution limits, checkpoints.",
           "risks": [
             { "id": "B.3.1", "name": "Sequencing failure" },
             { "id": "B.3.2", "name": "Infinite loop" },
@@ -73,8 +93,12 @@
         {
           "id": "B.4",
           "code": "R6",
-          "name": "Agent-to-Agent & Ecosystem Interaction",
+          "name": "Agent-to-agent & ecosystem interaction",
           "riskType": "Action-execution",
+          "owasp": "ASI04 / ASI07",
+          "scenario": "A compromised third-party API allows an attacker to control internal agents.",
+          "triggers": "Compromised third party. Weak agent identity. Unverified messages.",
+          "controlThemes": "Identity verification, secure messaging, isolation, inter-agent logging.",
           "risks": [
             { "id": "B.4.1", "name": "Cascading failure" },
             { "id": "B.4.2", "name": "Agent spoofing" },
@@ -90,8 +114,12 @@
         {
           "id": "C.1",
           "code": "R7",
-          "name": "Human Oversight, Accountability & Trust",
+          "name": "Human control, accountability & trust",
           "riskType": "Governance",
+          "owasp": "ASI09",
+          "scenario": "Human operators rubber-stamp a batch of flawed refunds.",
+          "triggers": "Poor human-in-the-loop design. Alert fatigue. Ambiguous accountability.",
+          "controlThemes": "Human-in-the-loop, dual approval, human override, clear ownership.",
           "risks": [
             { "id": "C.1.1", "name": "Human approval bypass" },
             { "id": "C.1.2", "name": "Automation bias" },
@@ -101,8 +129,12 @@
         {
           "id": "C.2",
           "code": "R8",
-          "name": "Observability, Traceability & Auditability",
+          "name": "Observability, traceability & auditability",
           "riskType": "Governance",
+          "owasp": "no clean fit",
+          "scenario": "Auditors cannot determine why the agent granted a specific loan application.",
+          "triggers": "Logging gaps. Poor telemetry. Distributed systems.",
+          "controlThemes": "Immutable logs, trace IDs, monitoring, audit trails, provenance capture.",
           "risks": [
             { "id": "C.2.1", "name": "Missing logs" },
             { "id": "C.2.2", "name": "Incomplete action history" },
@@ -112,8 +144,12 @@
         {
           "id": "C.3",
           "code": "R9",
-          "name": "Behavioural Stability & Runtime Drift",
+          "name": "Behavioural stability & runtime drift",
           "riskType": "Model-output",
+          "owasp": "ASI10",
+          "scenario": "After a silent model update, the agent begins prioritising speed over accuracy.",
+          "triggers": "Model update. Environmental change. Memory accumulation.",
+          "controlThemes": "Runtime monitoring, behavioural baselines, kill switch, revalidation.",
           "risks": [
             { "id": "C.3.1", "name": "Behavioural drift" },
             { "id": "C.3.2", "name": "Increased risk-taking" },
@@ -124,11 +160,11 @@
     }
   ],
   "amplificationFactors": [
-    { "name": "Irreversible Actions", "description": "Actions that cannot be undone (e.g., deleting data, transferring funds)." },
-    { "name": "External Impacts", "description": "Actions directly affecting customers, external systems, or the public." },
-    { "name": "Sensitive Data", "description": "Access to PII, health records, financial data, or intellectual property." },
-    { "name": "Financial Impact", "description": "High transaction limits or access to corporate payment systems." },
-    { "name": "Vulnerable Users", "description": "Interaction with minors, elderly, or users in crisis." },
-    { "name": "Execution Velocity", "description": "The agent's ability to repeat an error thousands of times in seconds." }
+    { "name": "Irreversible actions", "description": "Actions that cannot be undone, such as deleting data or transferring funds." },
+    { "name": "External impacts", "description": "Actions directly affecting customers, external systems or the public." },
+    { "name": "Sensitive data", "description": "Access to personal data, health records, financial data or intellectual property." },
+    { "name": "Financial impact", "description": "High transaction limits, or access to corporate payment systems." },
+    { "name": "Vulnerable users", "description": "Interaction with minors, elderly users, or users in crisis." },
+    { "name": "Execution velocity", "description": "The agent's ability to repeat an error thousands of times in seconds." }
   ]
 }

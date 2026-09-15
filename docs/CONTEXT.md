@@ -25,18 +25,29 @@ local dev environment for a wording change.
 
 ## Who owns which column
 
+Level names changed in the final report. The ladder shifted as well as the
+labels: what used to be `L1 — Bounded assistant` (drafts and proposes) is now
+`L2 — Prepare action`, and `L1` is advice-only. Anything written against the old
+names needs re-reading, not renaming.
+
 | Column | Owner | State |
 |---|---|---|
-| L0 — No execution | Ben | Published, complete, evidenced |
-| L1 — Bounded assistant | Shalom | Draft placeholder |
-| L2 — Supervised actor | Kevin | Draft placeholder |
-| L3 — Conditional agent | Asli & Beste | Draft placeholder, drafted in the workbook |
-| L4 — Delegated agent | Peri | Draft placeholder |
-| L5 — Open agent | Frances | Draft placeholder, drafted in the workbook |
+| L0 — Respond only | Ben | Annotated, complete, evidenced |
+| L1 — Advise only | Shalom | Annotated (judiciary advisory scoring), evidenced |
+| L2 — Prepare action | Kevin / Bhoomika | Annotated (GMP biologics drafting), evidenced |
+| L3 — Approved execution | Asli & Beste | Posture and tier published; no scenario card |
+| L4 — Bounded autonomy | Peri | Annotated, complete, evidenced |
+| L5 — Open autonomy | Frances | Posture and tier published; no scenario card |
 
-Placeholder cells carry a provisional `posture` and `risk` but no scenario,
-controls or sources. Owners fill in their own column. **Do not write content for
-someone else's column** — the ratings are researched positions, not gaps to fill.
+**Every one of the 24 cells now carries a reconciled posture and tier** from the
+final report (Appendix C Table C1, Appendix E Table E1). What varies is research
+depth: sixteen cells have a researched scenario card, and the eight in L3 and L5
+carry `"annotated": false` and fall back to the generic tier floor. The page
+labels that fallback rather than hiding it.
+
+Owners fill in their own column. **Do not write content for someone else's
+column** — the ratings are researched positions, and a missing scenario card is
+a statement about what was researched, not a gap to fill with plausible text.
 
 ## Where content comes from
 
@@ -76,14 +87,20 @@ should exist. The control set carries the weight, not the colour.
 Flagged to the team, not yet resolved. They will surface as inconsistencies
 between columns as more content lands:
 
-1. **Two incompatible impact-scale definitions are in circulation.** The
-   reference scale in the workbook defines impact by *reversibility and blast
-   radius*; the circulated grid defines it by *materiality*. Different columns
-   were classified against different definitions. `content/scales.json` currently
-   uses the materiality wording.
-2. **Two non-monotonic cells in the circulated grid** — L3/I1 rated above L3/I2,
-   and L2/I3 prohibited while L3/I3 is permitted with dual approval. Probably
-   fill errors. Risk should not fall as impact or autonomy rises.
+1. ~~**Two incompatible impact-scale definitions are in circulation.**~~
+   **Settled.** The final report adopts the workbook reference scale —
+   *reversibility and blast radius* — and `content/scales.json` was moved onto
+   that wording in September 2026. The materiality phrasing is gone. If a column
+   still reads as if it were classified against materiality, that column needs
+   re-reading, not the scale.
+2. ~~**Two non-monotonic cells in the circulated grid.**~~ **Settled by
+   reconciliation.** The published grid is monotonic: risk never falls as
+   impact or autonomy rises. The `L2 × I3` case was resolved to *mandatory
+   verified sign-off* at tier 3 rather than *prohibited* — the permitting draft
+   cited 21 C.F.R. pt. 11, *Mata v. Avianca* and draft FDA guidance; the
+   prohibiting draft recorded no scenario, controls or citation. The full
+   eight-row reconciliation is published on the page under "Where the drafts
+   disagreed" and lives in `content/report.json`.
 3. **The risk taxonomy has no ID for confabulation / information integrity**,
    which is the dominant failure mode at L0. Taxonomy v2 briefly resolved this
    as `R5.3 Confabulated or unsupported output`, but the v3 restructure
@@ -96,6 +113,11 @@ between columns as more content lands:
 
 ## Settled since the scaffold was built
 
+- **The masthead now carries the tagline lockup and the gradient orb.** Both
+  were previously banned in `CLAUDE.md` — the lockup as marketing copy, the orb
+  as a breach of colour-means-risk. Reversed in September 2026 at the team's
+  request; `CLAUDE.md` records the exception and its limits. The rest of the
+  rule is unchanged: no second coloured element anywhere on the page.
 - **Repo lives in the HUX AI GitHub org.** `deploy.yml` assumes GitHub Pages;
   switch to Cloudflare Pages only if the repo must stay private on a free plan.
   (Vercel remains rejected — its free tier prohibits commercial use.)
@@ -145,8 +167,12 @@ between columns as more content lands:
 - **Named backup maintainer.** Blank in `docs/BREAK-GLASS.md` and the single
   biggest handover risk. Needs someone who has actually merged a PR and re-run a
   deploy before 31 August.
-- **Which columns commit to publishing by Week 10.** The site does not need all
-  24 cells; unpublished ones display as "In progress" by design.
+- ~~**Which columns commit to publishing by Week 10.**~~ **Settled:** all 24
+  carry a posture and tier; L3 and L5 publish without a scenario card, labelled
+  as the tier floor.
+- **Whether L3 and L5 get scenario cards after launch.** The instrument does not
+  need them — the postures are reconciled and published — but the two columns
+  read thinner than the other four, and the limitations section says so.
 - **Repo ownership and HUX affiliation after Week 10.**
 
 ## Recent technical decisions worth knowing
@@ -164,11 +190,25 @@ between columns as more content lands:
 
 ## Out of scope
 
-A separate interactive assessment tool has been discussed as its own project with
-its own repo. **This site presents the matrix; it does not compute with it.**
-Requests to add a classifier, questionnaire or scoring engine belong there. Say
-so rather than building it — holding this line is what makes the Week 10 date
-achievable.
+~~A separate interactive assessment tool has been discussed as its own project
+with its own repo. This site presents the matrix; it does not compute with
+it.~~ **Reversed, September 2026.** The classification tree and the scoring
+instrument are published research output — report Appendices B and E — not a
+speculative feature, and they now ship on this page
+(`components/ClassificationTree.jsx`, `components/AssessmentTool.jsx`,
+constants in `content/assessment.json`).
+
+The line that replaces it is narrower and still worth holding: **the instruments
+report the report's own calibration, they do not invent any.** Every weight,
+threshold and coverage band comes from the workbook and is labelled on the page
+as a project calibration rule with no external derivation and no sensitivity
+analysis. A request to add a scoring dimension the report does not define, or to
+tune a constant to make an output "look right", belongs upstream in the workbook
+— say so rather than editing the number.
+
+Still out of scope: persistence of any kind. The site is a static export with no
+backend, so an assessment cannot be saved, shared by link or exported. Requests
+for that are a different project.
 
 ## Likely next tasks
 
